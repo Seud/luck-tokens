@@ -1,0 +1,34 @@
+﻿using Terraria;
+using Terraria.ModLoader;
+
+namespace TokenMod.Items.Token
+{
+    public class EterniaToken : ModItem
+    {
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Eternia Stone");
+            Tooltip.SetDefault("A foreign token stone\nRight-click to generate semi-random tokens");
+        }
+
+        public override void SetDefaults()
+        {
+            item.width = BaseToken.WIDTH;
+            item.height = BaseToken.HEIGHT;
+            item.maxStack = BaseToken.MAX_STACK;
+            item.value = 0;
+            item.rare = 3;
+        }
+
+        public override bool CanRightClick()
+        {
+            return true;
+        }
+
+        public override void RightClick(Player player)
+        {
+            TokenUtils.DropTokens(mod, player, TokenBalance.ETERNIA_VALUE, player.getRect(), true, (TokenUtils.random.Next(1) == 0) ? mod.ItemType<InvasionToken>() : mod.ItemType<BossToken>());
+        }
+    }
+}

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0B01A751-E1C2-40B9-8524-8850A3134F85}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TokenMod</RootNamespace>
+    <AssemblyName>TokenMod</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\EzXNA\Microsoft.Xna.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\EzXNA\Microsoft.Xna.Framework.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\EzXNA\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\EzXNA\Microsoft.Xna.Framework.Xact.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Terraria">
+      <HintPath>..\..\..\..\..\..\Steam\SteamApps\common\Terraria\Terraria.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Items\Essence\LuckEssence.cs" />
+    <Compile Include="Items\MeteorCharm.cs" />
+    <Compile Include="Items\TokenGlobalItem.cs" />
+    <Compile Include="Items\Token\BaseToken.cs" />
+    <Compile Include="Items\Token\BossToken.cs" />
+    <Compile Include="Items\Token\CorruptionToken.cs" />
+    <Compile Include="Items\Token\CrimsonToken.cs" />
+    <Compile Include="Items\Token\DesertToken.cs" />
+    <Compile Include="Items\Token\DungeonToken.cs" />
+    <Compile Include="Items\Token\EterniaToken.cs" />
+    <Compile Include="Items\Token\FishingToken.cs" />
+    <Compile Include="Items\Token\FishingTokenCrate.cs" />
+    <Compile Include="Items\Token\ForestToken.cs" />
+    <Compile Include="Items\Token\HallowToken.cs" />
+    <Compile Include="Items\Token\InvasionToken.cs" />
+    <Compile Include="Items\Token\JungleToken.cs" />
+    <Compile Include="Items\Token\NPCToken.cs" />
+    <Compile Include="Items\Token\OceanToken.cs" />
+    <Compile Include="Items\Token\ShadowLockedToken.cs" />
+    <Compile Include="Items\Token\ShadowToken.cs" />
+    <Compile Include="Items\Token\SnowToken.cs" />
+    <Compile Include="Items\Token\SpaceToken.cs" />
+    <Compile Include="Items\Token\Tier1Token.cs" />
+    <Compile Include="Items\Token\Tier2Token.cs" />
+    <Compile Include="Items\Token\Tier3Token.cs" />
+    <Compile Include="Items\Token\Tier4Token.cs" />
+    <Compile Include="Items\Token\Tier5Token.cs" />
+    <Compile Include="Items\Token\Tier6Token.cs" />
+    <Compile Include="Items\Token\Tier7Token.cs" />
+    <Compile Include="Items\Token\TravelingMerchantToken.cs" />
+    <Compile Include="Items\Token\UndergroundCorruptionToken.cs" />
+    <Compile Include="Items\Token\UndergroundCrimsonToken.cs" />
+    <Compile Include="Items\Token\UndergroundDesertToken.cs" />
+    <Compile Include="Items\Token\UndergroundHallowToken.cs" />
+    <Compile Include="Items\Token\UndergroundJungleToken.cs" />
+    <Compile Include="Items\Token\UndergroundSnowToken.cs" />
+    <Compile Include="Items\Token\UndergroundToken.cs" />
+    <Compile Include="Items\Token\UnderworldToken.cs" />
+    <Compile Include="Items\Token\WeatherToken.cs" />
+    <Compile Include="TokenBalance.cs" />
+    <Compile Include="TokenPlayer.cs" />
+    <Compile Include="TokenRecipes.cs" />
+    <Compile Include="TokenUtils.cs" />
+    <Compile Include="TokenGlobalNPC.cs" />
+    <Compile Include="TokenMod.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="build.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"C:\Steam\steamapps\common\Terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
