@@ -1,6 +1,9 @@
 author = Seud
 version = 0.9.1
-displayName = TokenMod
-includePDB = false
+displayName = Token Mod
+homepage = https://github.com/Seud/token-mod
+hideCode = false
+hideResources = false
 includeSource = true
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
+includePDB = false
