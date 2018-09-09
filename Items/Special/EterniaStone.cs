@@ -1,9 +1,10 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using TokenMod.Items.Token;
 
-namespace TokenMod.Items.Token
+namespace TokenMod.Items.Special
 {
-    public class EterniaToken : ModItem
+    public class EterniaStone : ModItem
     {
 
         public override void SetStaticDefaults()
@@ -28,7 +29,7 @@ namespace TokenMod.Items.Token
 
         public override void RightClick(Player player)
         {
-            TokenUtils.DropTokens(mod, player, TokenBalance.ETERNIA_VALUE, player.getRect(), true, (TokenUtils.random.Next(1) == 0) ? mod.ItemType<InvasionToken>() : mod.ItemType<BossToken>());
+            TokenUtils.DropTokens(mod, player, TokenBalance.ETERNIA_VALUE, player.getRect(), true, true, (TokenUtils.random.Next(1) == 0) ? mod.ItemType<InvasionToken>() : mod.ItemType<BossToken>());
         }
     }
 }

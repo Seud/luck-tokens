@@ -12,7 +12,7 @@ namespace TokenMod
             if (junk) return;
             if (TokenUtils.random.NextDouble() < TokenBalance.FISHING_TOKEN_CHANCE)
             {
-                caughtType = mod.ItemType<Items.Token.FishingTokenCrate>();
+                caughtType = mod.ItemType<Items.Special.FishingTokenCrate>();
             }
         }
     }

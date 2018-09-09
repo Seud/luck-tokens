@@ -2,8 +2,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TokenMod.Items.Token;
 
-namespace TokenMod.Items.Token
+namespace TokenMod.Items.Special
 {
     public class ShadowLockedToken : ModItem
     {

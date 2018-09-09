@@ -1,15 +1,16 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using TokenMod.Items.Token;
 
-namespace TokenMod.Items.Token
+namespace TokenMod.Items.Special
 {
-    public class FishingTokenCrate : ModItem
+    public class ChaoticEssence : ModItem
     {
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fishing Token Crate");
-            Tooltip.SetDefault("This wet token seems to have a lid...\nRight-click to generate random fishing tokens");
+            DisplayName.SetDefault("Chaotic Essence");
+            Tooltip.SetDefault("Not yet calibrated to this world\nRight-click to align to the world");
         }
 
         public override void SetDefaults()
@@ -18,7 +19,7 @@ namespace TokenMod.Items.Token
             item.height = BaseToken.HEIGHT;
             item.maxStack = BaseToken.MAX_STACK;
             item.value = 0;
-            item.rare = 2;
+            item.rare = 0;
         }
 
         public override bool CanRightClick()
@@ -28,7 +29,7 @@ namespace TokenMod.Items.Token
 
         public override void RightClick(Player player)
         {
-            TokenUtils.DropTokens(mod, player, 2500f * (1 + TokenUtils.GetCurrentWorldTier()), player.getRect(), true, mod.ItemType<FishingToken>());
+            Item.NewItem(player.getRect(), TokenUtils.GetTierEssence(mod, TokenUtils.GetCurrentWorldTier()), 25);
         }
     }
 }

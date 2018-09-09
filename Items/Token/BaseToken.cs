@@ -6,7 +6,7 @@ namespace TokenMod.Items.Token
     {
         public const int WIDTH = 30;
         public const int HEIGHT = 30;
-        public const int MAX_STACK = 1000;
+        public const int MAX_STACK = 99999;
 
         public override void SetStaticDefaults()
         {

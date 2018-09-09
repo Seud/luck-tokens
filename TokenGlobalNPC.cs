@@ -14,11 +14,13 @@ namespace TokenMod.NPCs
             // Token drop check
             if (npc.lifeMax > 1 && !npc.friendly && npc.value > 0f)
             {
-                int tokenOverride = (npc.boss) ? mod.ItemType<Items.Token.BossToken>() : 0;
-                TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), (npc.boss) ? true : TokenBalance.VALUE_INFLUENCES_DROPRATE, tokenOverride);
+                if(npc.boss)
+                    TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), true, true, mod.ItemType<Items.Token.BossToken>());
+                else
+                    TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), false, true);
             } else if (npc.lifeMax > 1 && npc.friendly)
             {
-                TokenUtils.DropTokens(mod, plr, TokenBalance.NPC_VALUE, npc.getRect(), TokenBalance.VALUE_INFLUENCES_DROPRATE, mod.ItemType<Items.Token.NPCToken>(), true);
+                TokenUtils.DropTokens(mod, plr, TokenBalance.NPC_VALUE, npc.getRect(), true, false, mod.ItemType<Items.Token.NPCToken>());
             }
 
         }

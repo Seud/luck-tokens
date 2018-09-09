@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TokenMod;
@@ -9,7 +10,7 @@ namespace ExampleMod.Items
     {
         public override void OpenVanillaBag(string context, Player player, int arg)
         {
-            float baseBossValue = 0;
+            float baseBossValue = 0f;
             switch (arg)
             {
                 case ItemID.KingSlimeBossBag: baseBossValue = 2; break;
@@ -27,7 +28,7 @@ namespace ExampleMod.Items
                 case ItemID.FishronBossBag: baseBossValue = 30; break;
                 case ItemID.MoonLordBossBag: baseBossValue = 50; break;
             }
-            TokenUtils.DropTokens(mod, player, baseBossValue * 10000, player.getRect(), true, mod.ItemType<TokenMod.Items.Token.BossToken>());
+            TokenUtils.DropTokens(mod, player, baseBossValue * 10000f, player.getRect(), true, true, mod.ItemType<TokenMod.Items.Token.BossToken>());
         }
     }
 }

@@ -5,13 +5,14 @@ using Terraria.ModLoader;
 
 namespace TokenMod.Items.Essence
 {
-    public class LuckEssence : ModItem
+    public class Tier0Essence : ModItem
     {
+        protected virtual Color VColor { get { return Color.Gray; } }
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Luck Essence");
-            Tooltip.SetDefault("Essence of pure luck\nUsed to craft items");
+            DisplayName.SetDefault("Basic Essence");
+            Tooltip.SetDefault("Faded essence that has lost its power\nYou should not have this");
             ItemID.Sets.ItemIconPulse[item.type] = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
         }
@@ -32,7 +33,7 @@ namespace TokenMod.Items.Essence
 
         public override void PostUpdate()
         {
-            Lighting.AddLight(item.Center, Color.LightCyan.ToVector3() * 0.50f * Main.essScale);
+            Lighting.AddLight(item.Center, VColor.ToVector3() * 0.50f * Main.essScale);
         }
 
         public override void SetDefaults()
@@ -40,7 +41,7 @@ namespace TokenMod.Items.Essence
             item.width = 18;
             item.height = 18;
             item.maxStack = 99999;
-            item.value = 100;
+            item.value = 5;
             item.rare = 1;
         }
     }

@@ -77,8 +77,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Items\Essence\LuckEssence.cs" />
-    <Compile Include="Items\MeteorCharm.cs" />
+    <Compile Include="Items\Essence\Tier0Essence.cs" />
+    <Compile Include="Items\Special\ChaoticEssence.cs" />
+    <Compile Include="Items\Special\MeteorCharm.cs" />
     <Compile Include="Items\TokenGlobalItem.cs" />
     <Compile Include="Items\Token\BaseToken.cs" />
     <Compile Include="Items\Token\BossToken.cs" />
@@ -86,26 +87,26 @@
     <Compile Include="Items\Token\CrimsonToken.cs" />
     <Compile Include="Items\Token\DesertToken.cs" />
     <Compile Include="Items\Token\DungeonToken.cs" />
-    <Compile Include="Items\Token\EterniaToken.cs" />
+    <Compile Include="Items\Special\EterniaStone.cs" />
     <Compile Include="Items\Token\FishingToken.cs" />
-    <Compile Include="Items\Token\FishingTokenCrate.cs" />
+    <Compile Include="Items\Special\FishingTokenCrate.cs" />
     <Compile Include="Items\Token\ForestToken.cs" />
     <Compile Include="Items\Token\HallowToken.cs" />
     <Compile Include="Items\Token\InvasionToken.cs" />
     <Compile Include="Items\Token\JungleToken.cs" />
     <Compile Include="Items\Token\NPCToken.cs" />
     <Compile Include="Items\Token\OceanToken.cs" />
-    <Compile Include="Items\Token\ShadowLockedToken.cs" />
+    <Compile Include="Items\Special\ShadowLockedToken.cs" />
     <Compile Include="Items\Token\ShadowToken.cs" />
     <Compile Include="Items\Token\SnowToken.cs" />
     <Compile Include="Items\Token\SpaceToken.cs" />
-    <Compile Include="Items\Token\Tier1Token.cs" />
-    <Compile Include="Items\Token\Tier2Token.cs" />
-    <Compile Include="Items\Token\Tier3Token.cs" />
-    <Compile Include="Items\Token\Tier4Token.cs" />
-    <Compile Include="Items\Token\Tier5Token.cs" />
-    <Compile Include="Items\Token\Tier6Token.cs" />
-    <Compile Include="Items\Token\Tier7Token.cs" />
+    <Compile Include="Items\Essence\Tier1Essence.cs" />
+    <Compile Include="Items\Essence\Tier2Essence.cs" />
+    <Compile Include="Items\Essence\Tier3Essence.cs" />
+    <Compile Include="Items\Essence\Tier4Essence.cs" />
+    <Compile Include="Items\Essence\Tier5Essence.cs" />
+    <Compile Include="Items\Essence\Tier6Essence.cs" />
+    <Compile Include="Items\Essence\Tier7Essence.cs" />
     <Compile Include="Items\Token\TravelingMerchantToken.cs" />
     <Compile Include="Items\Token\UndergroundCorruptionToken.cs" />
     <Compile Include="Items\Token\UndergroundCrimsonToken.cs" />

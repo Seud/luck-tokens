@@ -26,6 +26,23 @@ namespace TokenMod
         }
 
         /*
+         * Get essence corresponding to a certain tier
+         */
+        public static int GetTierEssence(Mod mod, int tier)
+        {
+            switch (tier)
+            {
+                case 7: return mod.ItemType<Items.Essence.Tier7Essence>();
+                case 6: return mod.ItemType<Items.Essence.Tier6Essence>();
+                case 5: return mod.ItemType<Items.Essence.Tier5Essence>();
+                case 4: return mod.ItemType<Items.Essence.Tier4Essence>();
+                case 3: return mod.ItemType<Items.Essence.Tier3Essence>();
+                case 2: return mod.ItemType<Items.Essence.Tier2Essence>();
+                default: return mod.ItemType<Items.Essence.Tier1Essence>();
+            }
+        }
+
+        /*
          * Make a list of eligible tokens depending on biome and events
          * At the end, randomly pick one
          */
@@ -68,7 +85,7 @@ namespace TokenMod
         /*
          * Calculate an amount of dropped tokens based on a chance
          */
-        public static int GetTokenAmount(double tokenDropChance, int mult = 1)
+        public static int GetTokenAmount(double tokenDropChance)
         {
             int droppedTokens = 0;
 
@@ -84,71 +101,42 @@ namespace TokenMod
                 droppedTokens++;
             }
 
-            return (droppedTokens * mult);
+            return droppedTokens;
         }
 
         /*
-         * Calculates an amount of dropped luck or tokens depending on value
+         * Automatically drop tokens and essence
+         * tokenOverride guarantees a certain token if set to a positive number, or does not generate any token if negative
          */
-        public static int GetValueAmount(float value, bool vid, bool luck = false)
-        {
-            double tokenDropChance = TokenBalance.DROP_BASE_RATE * (vid ? Math.Pow(value, TokenBalance.DROP_VALUE_POWER) : 1);
-            int mult = ((luck) ? TokenBalance.GetLuckAmount() : 1) * (vid ? 1 : (int) Math.Floor(Math.Pow(value, TokenBalance.DROP_VALUE_POWER)));
-
-            return GetTokenAmount(tokenDropChance, mult);
-        }
-
-        /*
-         * Automatically drop tokens
-         */
-        public static void DropTokens(Mod mod, Player plr, float value, Rectangle rect, bool vid, int tokenOverride = 0, bool noLuck = false)
+        public static void DropTokens(Mod mod, Player plr, float value, Rectangle rect, bool vic, bool dropEssence, int tokenOverride = 0)
         {
             int tier = GetCurrentWorldTier();
 
             // Calculate quantities
-            int droppedLuck = 0;
-
-            if (!noLuck)
-            {
-                droppedLuck = GetValueAmount(value, vid, true);
-            }
-
-            int droppedLocationTokens = GetValueAmount(value, vid);
-            int droppedTierTokens = GetValueAmount(value, vid);
+            int dropQuantity = GetDropAmount(value, tier, vic);
+            if (dropQuantity == 0) return;
 
             // Set token types
-            int locationToken = GetLocationToken(mod, plr);
-            int tierToken = mod.ItemType<Items.Token.Tier1Token>();
-
-            switch (tier)
-            {
-                case 7:
-                    tierToken = mod.ItemType<Items.Token.Tier7Token>();
-                    break;
-                case 6:
-                    tierToken = mod.ItemType<Items.Token.Tier6Token>();
-                    break;
-                case 5:
-                    tierToken = mod.ItemType<Items.Token.Tier5Token>();
-                    break;
-                case 4:
-                    tierToken = mod.ItemType<Items.Token.Tier4Token>();
-                    break;
-                case 3:
-                    tierToken = mod.ItemType<Items.Token.Tier3Token>();
-                    break;
-                case 2:
-                    tierToken = mod.ItemType<Items.Token.Tier2Token>();
-                    break;
-                default:
-                    tierToken = mod.ItemType<Items.Token.Tier1Token>();
-                    break;
-            }
+            int locationToken = (tokenOverride <= 0) ? GetLocationToken(mod, plr) : tokenOverride;
+            int tierEssence = GetTierEssence(mod, tier);
 
             // Drop the items
-            if (droppedLuck > 0) Item.NewItem(rect, mod.ItemType<Items.Essence.LuckEssence>(), droppedLuck);
-            if (droppedLocationTokens > 0) Item.NewItem(rect, locationToken, droppedLocationTokens);
-            if (droppedTierTokens > 0) Item.NewItem(rect, tierToken, droppedTierTokens);
+            if (dropEssence) Item.NewItem(rect, tierEssence, dropQuantity);
+            if (tokenOverride >= 0) Item.NewItem(rect, locationToken, dropQuantity);
+        }
+
+        /*
+         * Calculates an amount of dropped essence or tokens depending on value
+         * vic determines whether the value affects drop chance or drop quantity (Average is the same)
+         */
+        public static int GetDropAmount(float value, int tier, bool vic)
+        {
+            double valueMult = TokenBalance.GetValueMult(value, tier);
+
+            double tokenDropChance = TokenBalance.DROP_BASE_RATE * (vic ? valueMult : 1);
+            int mult = vic ? 1 : (int) Math.Ceiling(valueMult);
+
+            return GetTokenAmount(tokenDropChance) * mult;
         }
     }
 

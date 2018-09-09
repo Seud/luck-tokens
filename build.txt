@@ -1,6 +1,6 @@
 author = Seud
-version = 0.9.0
-displayName = Luck Tokens
+version = 0.9.1
+displayName = TokenMod
 includePDB = false
 includeSource = true
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
