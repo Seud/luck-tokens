@@ -19,13 +19,13 @@ namespace TokenMod
          */
 
         // Base token and essence droprate
-        public const double DROP_BASE_RATE = 0.05;
+        public const double DROP_BASE_RATE = 0.02;
 
         // Global value multiplier
         public const float VALUE_MULTIPLIER = 0.1f;
 
         // Global multiplier for costs
-        public const double GLOBAL_COST_MULTIPLIER = 0.5;
+        public const double GLOBAL_COST_MULTIPLIER = 0.1;
 
         // Chance that a fishing catch is replaced by a token
         public const double FISHING_TOKEN_CHANCE = 0.1;
@@ -117,26 +117,27 @@ namespace TokenMod
             double power = 1;
             switch(tier)
             {
-                case 1:
-                    power = 0.7;
-                    break;
-                case 2:
-                    power = 0.7;
-                    break;
-                case 3:
-                    power = 0.8;
-                    break;
-                case 4:
-                    power = 0.8;
-                    break;
-                case 5:
-                    power = 0.9;
+                case 7:
+                    power = 1;
                     break;
                 case 6:
                     power = 0.9;
                     break;
-                case 7:
-                    power = 1;
+                case 5:
+                    power = 0.9;
+                    break;
+                case 4:
+                    power = 0.8;
+                    break;
+                case 3:
+                    power = 0.8;
+                    break;
+                case 2:
+                    power = 0.7;
+                    break;
+                case 1:
+                default:
+                    power = 0.7;
                     break;
             }
             return Math.Pow(value * VALUE_MULTIPLIER, power);

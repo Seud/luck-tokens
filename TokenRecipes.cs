@@ -133,12 +133,14 @@ namespace TokenMod
              */
 
             // Tier downgrade
-            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier6Essence>(), 7, 1);
-            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier5Essence>(), 6, 1);
-            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier4Essence>(), 5, 1);
-            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier3Essence>(), 4, 1);
-            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier2Essence>(), 3, 1);
-            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier1Essence>(), 2, 1);
+            resultAmount = 100;
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier6Essence>(), 7, 100);
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier5Essence>(), 6, 100);
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier4Essence>(), 5, 100);
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier3Essence>(), 4, 100);
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier2Essence>(), 3, 100);
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier1Essence>(), 2, 100);
+            resultAmount = 1;
 
             // Token recycling
             String[] recyclable = { "Boss", "Corruption", "Crimson", "Desert", "Dungeon", "Fishing", "Forest", "Hallow", "Invasion", "Jungle", "Ocean", "Snow", "Space",

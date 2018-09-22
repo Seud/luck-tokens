@@ -18,7 +18,7 @@ namespace TokenMod.NPCs
                     TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), true, true, mod.ItemType<Items.Token.BossToken>());
                 else
                     TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), false, true);
-            } else if (npc.lifeMax > 1 && npc.friendly)
+            } else if (npc.lifeMax > 1 && (npc.friendly || npc.damage == 0))
             {
                 TokenUtils.DropTokens(mod, plr, TokenBalance.NPC_VALUE, npc.getRect(), true, false, mod.ItemType<Items.Token.NPCToken>());
             }
