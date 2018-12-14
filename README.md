@@ -25,6 +25,7 @@ New items are sorted in three categories that are used for various purposes.
   * Tier 5 : Post-Plantera, pre-Golem items
   * Tier 6 : Post-Golem, pre-Moon Lord items
   * Tier 7 : Post-Moon Lord items (Not a lot !)
+
   Tier essence can be downgraded for free. In addition, Location tokens can be recycled at a 4-to-1 ratio into the current Tier essence.
 * Special Tokens and items are acquired differently and have various uses
   * Boss Tokens are acquired from bosses (Or Treasure Bags if Expert mode is enabled) and used to craft Boss items
