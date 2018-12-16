@@ -108,21 +108,31 @@ namespace TokenMod
          * Automatically drop tokens and essence
          * tokenOverride guarantees a certain token if set to a positive number, or does not generate any token if negative
          */
-        public static void DropTokens(Mod mod, Player plr, float value, Rectangle rect, bool vic, bool dropEssence, int tokenOverride = 0)
+        public static void DropTokens(Mod mod, Player plr, float value, Rectangle rect, bool vic, bool dropEssence, int tokenOverride = 0, bool playerSpawn = false)
         {
             int tier = GetCurrentWorldTier();
 
             // Calculate quantities
             int dropQuantity = GetDropAmount(value, tier, vic);
-            if (dropQuantity == 0) return;
+            if (dropQuantity == 0)
+            {
+                if (vic) dropQuantity = 1; else return;
+            }
 
             // Set token types
             int locationToken = (tokenOverride <= 0) ? GetLocationToken(mod, plr) : tokenOverride;
             int tierEssence = GetTierEssence(mod, tier);
 
             // Drop the items
-            if (dropEssence) Item.NewItem(rect, tierEssence, dropQuantity);
-            if (tokenOverride >= 0) Item.NewItem(rect, locationToken, dropQuantity);
+            if (playerSpawn)
+            {
+                if (dropEssence) plr.QuickSpawnItem(tierEssence, dropQuantity);
+                if (tokenOverride >= 0) plr.QuickSpawnItem(locationToken, dropQuantity);
+            } else
+            {
+                if (dropEssence) Item.NewItem(rect, tierEssence, dropQuantity);
+                if (tokenOverride >= 0) Item.NewItem(rect, locationToken, dropQuantity);
+            }
         }
 
         /*

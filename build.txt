@@ -1,5 +1,5 @@
 author = Seud
-version = 1.0.0
+version = 1.0.1
 displayName = Token Mod
 homepage = https://github.com/Seud/token-mod
 hideCode = false

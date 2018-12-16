@@ -29,7 +29,7 @@ namespace TokenMod.Items.Special
 
         public override void RightClick(Player player)
         {
-            Item.NewItem(player.getRect(), TokenUtils.GetTierEssence(mod, TokenUtils.GetCurrentWorldTier()), 25);
+            player.QuickSpawnItem(TokenUtils.GetTierEssence(mod, TokenUtils.GetCurrentWorldTier()), 25);
         }
     }
 }
