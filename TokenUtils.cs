@@ -116,7 +116,7 @@ namespace TokenMod
             int dropQuantity = GetDropAmount(value, tier, vic);
             if (dropQuantity == 0)
             {
-                if (vic) dropQuantity = 1; else return;
+                if (vic && value > 0) dropQuantity = 1; else return;
             }
 
             // Set token types
