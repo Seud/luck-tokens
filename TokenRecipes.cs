@@ -263,7 +263,7 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.EskimoCoat, 150 / 3, Rarity.Common, 1, "Snow");
             MakeTokenRecipe(ItemID.EskimoPants, 150 / 3, Rarity.Common, 1, "Snow");
 
-            MakeTokenRecipe(ItemID.Amarok, 300, Rarity.VeryCommon, 2, "Snow");
+            MakeTokenRecipe(ItemID.Amarok, 300, Rarity.VeryCommon, 3, "Snow");
 
             MakeTokenRecipe(ItemID.FrostCore, 1, Rarity.VeryRare, 3, "Snow", "Weather");
             MakeTokenRecipe(ItemID.IceFeather, 3, Rarity.VeryRare, 3, "Snow", "Weather");
@@ -361,7 +361,7 @@ namespace TokenMod
             resultAmount = 30;
             MakeTokenRecipe(ItemID.LivingFireBlock, 50, Rarity.VeryCommon, 3, "Underworld");
             resultAmount = 1;
-            MakeTokenRecipe(ItemID.HelFire, 400, Rarity.VeryCommon, 2, "Underworld");
+            MakeTokenRecipe(ItemID.HelFire, 400, Rarity.VeryCommon, 3, "Underworld");
 
             MakeTokenRecipe(ItemID.UnholyTrident, 30, Rarity.Common, 4, "Underworld");
             MakeTokenRecipe(ItemID.FireFeather, 75, Rarity.Common, 4, "Underworld");
