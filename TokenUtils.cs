@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -45,42 +46,47 @@ namespace TokenMod
          * Make a list of eligible tokens depending on biome and events
          * At the end, randomly pick one
          */
-        public static int GetLocationToken(Mod mod, Player plr)
+        public static List<int> GetLocationTokens(Mod mod, Player plr)
         {
-            WeightedIntList eligibleTokens = new WeightedIntList(random);
+            List<int> eligibleTokens = new List<int>();
 
             bool isUnderground = plr.ZoneDirtLayerHeight || plr.ZoneRockLayerHeight;
             bool isDesert = (plr.ZoneDesert || plr.ZoneUndergroundDesert);
 
             // Determine biome
-            if (isDesert) eligibleTokens.Add(mod.ItemType<Items.Token.DesertToken>(), 1);
-            if (plr.ZoneCorrupt) eligibleTokens.Add(mod.ItemType<Items.Token.CorruptionToken>(), 1);
-            if (plr.ZoneCrimson) eligibleTokens.Add(mod.ItemType<Items.Token.CrimsonToken>(), 1);
-            if (plr.ZoneHoly) eligibleTokens.Add(mod.ItemType<Items.Token.HallowToken>(), 1);
-            if (plr.ZoneJungle) eligibleTokens.Add(mod.ItemType<Items.Token.JungleToken>(), 1);
-            if (plr.ZoneSnow) eligibleTokens.Add(mod.ItemType<Items.Token.SnowToken>(), 1);
-            if (plr.ZoneBeach) eligibleTokens.Add(mod.ItemType<Items.Token.OceanToken>(), 1);
-            if (plr.ZoneSkyHeight) eligibleTokens.Add(mod.ItemType<Items.Token.SpaceToken>(), 1);
-            if (plr.ZoneUnderworldHeight) eligibleTokens.Add(mod.ItemType<Items.Token.UnderworldToken>(), 1);
+            if(plr.ZoneOverworldHeight)
+            {
+                if (isDesert) eligibleTokens.Add(mod.ItemType<Items.Token.DesertToken>());
+                if (plr.ZoneCorrupt) eligibleTokens.Add(mod.ItemType<Items.Token.CorruptionToken>());
+                if (plr.ZoneCrimson) eligibleTokens.Add(mod.ItemType<Items.Token.CrimsonToken>());
+                if (plr.ZoneHoly) eligibleTokens.Add(mod.ItemType<Items.Token.HallowToken>());
+                if (plr.ZoneJungle) eligibleTokens.Add(mod.ItemType<Items.Token.JungleToken>());
+                if (plr.ZoneSnow) eligibleTokens.Add(mod.ItemType<Items.Token.SnowToken>());
+                if (plr.ZoneBeach) eligibleTokens.Add(mod.ItemType<Items.Token.OceanToken>());
 
-            if (isUnderground && isDesert) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundDesertToken>(), 4);
-            if (isUnderground && plr.ZoneCorrupt) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundCorruptionToken>(), 4);
-            if (isUnderground && plr.ZoneCrimson) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundCrimsonToken>(), 4);
-            if (isUnderground && plr.ZoneDungeon) eligibleTokens.Add(mod.ItemType<Items.Token.DungeonToken>(), 4);
-            if (isUnderground && plr.ZoneHoly) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundHallowToken>(), 4);
-            if (isUnderground && plr.ZoneJungle) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundJungleToken>(), 4);
-            if (isUnderground && plr.ZoneSnow) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundSnowToken>(), 4);
-            if (isUnderground) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundToken>(), 1);
+                if (eligibleTokens.Count == 0) eligibleTokens.Add(mod.ItemType<Items.Token.ForestToken>());
 
-            if (eligibleTokens.GetTotalWeight() == 0) eligibleTokens.Add(mod.ItemType<Items.Token.ForestToken>(), 1);
+                if (Main.eclipse || Main.bloodMoon || Main.pumpkinMoon || Main.snowMoon || Main.invasionType > 0) eligibleTokens.Add(mod.ItemType<Items.Token.InvasionToken>());
+                if (Main.raining || Main.slimeRain || plr.ZoneSandstorm) eligibleTokens.Add(mod.ItemType<Items.Token.WeatherToken>());
+            }
 
-            int curWeight = eligibleTokens.GetTotalWeight();
+            if(isUnderground)
+            {
+                if (isDesert) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundDesertToken>());
+                if (plr.ZoneCorrupt) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundCorruptionToken>());
+                if (plr.ZoneCrimson) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundCrimsonToken>());
+                if (plr.ZoneDungeon) eligibleTokens.Add(mod.ItemType<Items.Token.DungeonToken>());
+                if (plr.ZoneHoly) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundHallowToken>());
+                if (plr.ZoneJungle) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundJungleToken>());
+                if (plr.ZoneSnow) eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundSnowToken>());
 
-            // Determine additional conditions
-            if (Main.eclipse || Main.bloodMoon || Main.pumpkinMoon || Main.snowMoon || Main.invasionType > 0) eligibleTokens.Add(mod.ItemType<Items.Token.InvasionToken>(), curWeight);
-            if (Main.raining || Main.slimeRain || plr.ZoneSandstorm) eligibleTokens.Add(mod.ItemType<Items.Token.WeatherToken>(), curWeight);
+                eligibleTokens.Add(mod.ItemType<Items.Token.UndergroundToken>());
+            }
 
-            return eligibleTokens.GetWeightedInt();
+            if (plr.ZoneSkyHeight) eligibleTokens.Add(mod.ItemType<Items.Token.SpaceToken>());
+            if (plr.ZoneUnderworldHeight) eligibleTokens.Add(mod.ItemType<Items.Token.UnderworldToken>());
+
+            return eligibleTokens;
         }
 
         /*
@@ -109,7 +115,7 @@ namespace TokenMod
          * Automatically drop tokens and essence
          * tokenOverride guarantees a certain token if set to a positive number, or does not generate any token if negative
          */
-        public static void DropTokens(Mod mod, Player plr, float value, Rectangle rect, bool vic, bool dropEssence, int tokenOverride = 0, bool playerSpawn = false)
+        public static void DropTokens(Mod mod, Player plr, float value, Rectangle rect, bool vic, bool dropEssence, List<int> tokens, bool playerSpawn = false)
         {
             int tier = GetCurrentWorldTier();
 
@@ -120,19 +126,17 @@ namespace TokenMod
                 if (vic && value > 0) dropQuantity = 1; else return;
             }
 
-            // Set token types
-            int locationToken = (tokenOverride <= 0) ? GetLocationToken(mod, plr) : tokenOverride;
             int tierEssence = GetTierEssence(mod, tier);
 
             // Drop the items
             if (playerSpawn)
             {
                 if (dropEssence) plr.QuickSpawnItem(tierEssence, dropQuantity);
-                if (tokenOverride >= 0) plr.QuickSpawnItem(locationToken, dropQuantity);
+                foreach (int token in tokens) plr.QuickSpawnItem(token, dropQuantity);
             } else
             {
                 if (dropEssence) Item.NewItem(rect, tierEssence, dropQuantity);
-                if (tokenOverride >= 0) Item.NewItem(rect, locationToken, dropQuantity);
+                foreach (int token in tokens) Item.NewItem(rect, token, dropQuantity);
             }
         }
 

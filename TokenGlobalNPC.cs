@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,12 +16,12 @@ namespace TokenMod.NPCs
             if (npc.lifeMax > 1 && !npc.friendly && npc.value > 0f)
             {
                 if(npc.boss)
-                    TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), true, true, mod.ItemType<Items.Token.BossToken>());
+                    TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), true, true, new List<int> { mod.ItemType<Items.Token.BossToken>() } );
                 else
-                    TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), false, true);
+                    TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), false, true, TokenUtils.GetLocationTokens(mod, plr));
             } else if (npc.lifeMax > 1 && (npc.friendly || npc.damage == 0))
             {
-                TokenUtils.DropTokens(mod, plr, TokenBalance.NPC_VALUE, npc.getRect(), false, false, mod.ItemType<Items.Token.NPCToken>());
+                TokenUtils.DropTokens(mod, plr, TokenBalance.NPC_VALUE, npc.getRect(), false, false, new List<int> { mod.ItemType<Items.Token.NPCToken>() } );
             }
 
         }

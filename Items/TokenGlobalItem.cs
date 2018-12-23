@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TokenMod;
@@ -27,7 +28,7 @@ namespace ExampleMod.Items
                 case ItemID.FishronBossBag: baseBossValue = 30; break;
                 case ItemID.MoonLordBossBag: baseBossValue = 50; break;
             }
-            TokenUtils.DropTokens(mod, player, baseBossValue * 10000f, player.getRect(), true, true, mod.ItemType<TokenMod.Items.Token.BossToken>(), true);
+            TokenUtils.DropTokens(mod, player, baseBossValue * 10000f, player.getRect(), true, true, new List<int> { mod.ItemType<TokenMod.Items.Token.BossToken>() }, true);
         }
     }
 }

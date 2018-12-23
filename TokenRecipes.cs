@@ -24,7 +24,7 @@ namespace TokenMod
          * Makes a raw recipe with essence and tokens
          * Can optionally use another item or generate multiple copies (Using class attributes)
          */
-        public void MakeRawTokenRecipe(int result, int tier, int cost, String token1 = "", String token2 = "")
+        public void MakeRawTokenRecipe(int result, int tier, int cost, string token1 = "", string token2 = "")
         {
             // Add a recipe using up to 4 different token types and a bonus item
             ModRecipe recipe = new ModRecipe(mod);
@@ -35,8 +35,8 @@ namespace TokenMod
             if (cost > 0)
             {
                 if (tier >= 0) recipe.AddIngredient(TokenUtils.GetTierEssence(mod, tier), cost);
-                if (!String.IsNullOrEmpty(token1)) recipe.AddIngredient(mod, token1 + "Token", cost);
-                if (!String.IsNullOrEmpty(token2)) recipe.AddIngredient(mod, token2 + "Token", cost);
+                if (!string.IsNullOrEmpty(token1)) recipe.AddIngredient(mod, token1 + "Token", cost);
+                if (!string.IsNullOrEmpty(token2)) recipe.AddIngredient(mod, token2 + "Token", cost);
             }
             if (bonusItemID > 0) recipe.AddIngredient(bonusItemID, bonusItemAmount);
 
@@ -48,7 +48,7 @@ namespace TokenMod
          * Makes a recipe with tokens
          * Automatically calculates costs
          */
-        public void MakeTokenRecipe(int result, double dropRate, Rarity rarity, int tier, String location = "", String location2 = "")
+        public void MakeTokenRecipe(int result, double dropRate, Rarity rarity, int tier, string location = "", string location2 = "")
         {
             int totalCost = TokenBalance.CalculateCost(dropRate, rarity, tier);
 
@@ -58,7 +58,7 @@ namespace TokenMod
         /*
          * Make multiple recipes for equivalent results
          */
-        public void MakeTokenRecipes(int[] results, int dropRate, Rarity rarity, int tier, String location = "", String location2 = "")
+        public void MakeTokenRecipes(int[] results, int dropRate, Rarity rarity, int tier, string location = "", string location2 = "")
         {
             foreach (int result in results)
             {
@@ -69,7 +69,7 @@ namespace TokenMod
         /*
         * Makes a recipe for swapping items at a cost
         */
-        public void MakeSwapRecipe(int swapIn, int swapOut, int length, int tier, String swapCost = "")
+        public void MakeSwapRecipe(int swapIn, int swapOut, int length, int tier, string swapCost = "")
         {
             int totalCost = TokenBalance.CalculateCost(length, Rarity.Redeem, tier);
 
@@ -82,7 +82,7 @@ namespace TokenMod
          * Makes recipes for swapping items within a set at a cost
          * Can also deduce a recipe
          */
-        public void MakeSwapRecipes(int[] swaps, Rarity rarity, int tier, String swapCost = "", bool addRecipe = false, double dropRate = 1)
+        public void MakeSwapRecipes(int[] swaps, Rarity rarity, int tier, string swapCost = "", bool addRecipe = false, double dropRate = 1)
         {
             for (int i = 0; i < swaps.Length; i++)
             {
@@ -142,20 +142,12 @@ namespace TokenMod
             MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier1Essence>(), 2, 100);
             resultAmount = 1;
 
-            // Token recycling
-            String[] recyclable = { "Boss", "Corruption", "Crimson", "Desert", "Dungeon", "Fishing", "Forest", "Hallow", "Invasion", "Jungle", "Ocean", "Snow", "Space",
-                "UndergroundCorruption", "UndergroundCrimson", "UndergroundDesert", "UndergroundHallow", "UndergroundJungle", "UndergroundSnow", "Underground", "Weather" };
-            foreach (string s in recyclable)
-            {
-                MakeRawTokenRecipe(mod.ItemType<Items.Special.ChaoticEssence>(), -1, 100, s);
-            }
-
             /*
              * Mob drops
              */
 
             // Forest mobs
-            MakeTokenRecipe(ItemID.SlimeStaff, 10000, Rarity.VeryCommon, 0, "Forest");
+            MakeTokenRecipe(ItemID.SlimeStaff, 10000, Rarity.VeryCommon, 0);
             MakeTokenRecipe(ItemID.Shackle, 50, Rarity.Common, 0, "Forest");
             MakeTokenRecipe(ItemID.ZombieArm, 250, Rarity.Common, 0, "Forest");
             MakeTokenRecipe(ItemID.BlackLens, 100, Rarity.Common, 0, "Forest");
@@ -180,6 +172,7 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.Skull, 500, Rarity.Common, 1, "Underground");
             MakeTokenRecipe(ItemID.Rally, 26, Rarity.Common, 1, "Underground");
             MakeTokenRecipe(ItemID.Compass, 50, Rarity.Common, 1, "Underground");
+            MakeTokenRecipe(ItemID.RobotHat, 250, Rarity.Common, 1, "Underground");
             MakeTokenRecipe(ItemID.ChainKnife, 250, Rarity.Common, 1, "Underground");
             MakeTokenRecipe(ItemID.JellyfishNecklace, 100, Rarity.Common, 1, "Underground");
             MakeTokenRecipe(ItemID.WhoopieCushion, 50, Rarity.Uncommon, 1, "Underground");
@@ -224,12 +217,17 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.Bezoar, 100, Rarity.Common, 3, "UndergroundJungle");
             MakeTokenRecipe(ItemID.Uzi, 100, Rarity.Common, 3, "UndergroundJungle");
             MakeTokenRecipe(ItemID.TatteredBeeWing, 150, Rarity.Common, 3, "UndergroundJungle");
+            MakeTokenRecipe(ItemID.TurtleShell, 17, Rarity.Uncommon, 3, "UndergroundJungle");
             MakeTokenRecipe(ItemID.ButterflyDust, 2, Rarity.VeryRare, 3, "UndergroundJungle");
+
+            MakeTokenRecipe(ItemID.Yelets, 200, Rarity.VeryCommon, 4, "UndergroundJungle");
 
             MakeTokenRecipe(ItemID.LihzahrdPowerCell, 50, Rarity.Common, 5, "UndergroundJungle");
             MakeTokenRecipe(ItemID.LizardEgg, 1000, Rarity.Common, 5, "UndergroundJungle");
 
             // Desert mobs
+            MakeTokenRecipe(ItemID.AntlionClaw, 50, Rarity.Common, 1, "Desert", "Weather");
+
             MakeTokenRecipe(ItemID.MummyMask, 75 / 3, Rarity.Common, 3, "Desert");
             MakeTokenRecipe(ItemID.MummyShirt, 75 / 3, Rarity.Common, 3, "Desert");
             MakeTokenRecipe(ItemID.MummyPants, 75 / 3, Rarity.Common, 3, "Desert");
@@ -271,6 +269,7 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.VikingHelmet, 50, Rarity.Common, 1, "UndergroundSnow");
             MakeTokenRecipe(ItemID.SnowballLauncher, 150, Rarity.Common, 1, "UndergroundSnow");
 
+            MakeTokenRecipe(ItemID.Amarok, 300, Rarity.VeryCommon, 3, "UndergroundSnow");
             MakeTokenRecipe(ItemID.FrostStaff, 50, Rarity.Common, 3, "UndergroundSnow");
             MakeTokenRecipe(ItemID.IceSickle, 180, Rarity.Common, 3, "UndergroundSnow");
             MakeTokenRecipe(ItemID.FrozenTurtleShell, 200, Rarity.Uncommon, 3, "UndergroundSnow");
@@ -288,6 +287,9 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.Blindfold, 100, Rarity.Common, 3, "Corruption");
             MakeTokenRecipe(ItemID.Vitamins, 100, Rarity.Common, 3, "Corruption");
 
+            MakeTokenRecipe(ItemID.Blindfold, 100, Rarity.Common, 3, "UndergroundCorruption");
+            MakeTokenRecipe(ItemID.Vitamins, 100, Rarity.Common, 3, "UndergroundCorruption");
+
             int[] corruptionMimicSwaps = { ItemID.DartRifle, ItemID.WormHook, ItemID.ChainGuillotines, ItemID.ClingerStaff, ItemID.PutridScent };
             MakeSwapRecipes(corruptionMimicSwaps, Rarity.VeryRare, 3, "UndergroundCorruption", true);
             MakeTokenRecipe(ItemID.Nazar, 100, Rarity.Uncommon, 3, "UndergroundCorruption");
@@ -297,6 +299,7 @@ namespace TokenMod
 
             int[] crimsonMimicSwaps = { ItemID.SoulDrain, ItemID.DartPistol, ItemID.FetidBaghnakhs, ItemID.FleshKnuckles, ItemID.TendonHook };
             MakeSwapRecipes(crimsonMimicSwaps, Rarity.VeryRare, 3, "UndergroundCrimson", true);
+            MakeTokenRecipe(ItemID.MeatGrinder, 200, Rarity.VeryCommon, 3, "UndergroundCrimson");
             MakeTokenRecipe(ItemID.Vitamins, 100, Rarity.Common, 3, "UndergroundCrimson");
             MakeTokenRecipe(ItemID.Nazar, 100, Rarity.Uncommon, 3, "UndergroundCrimson");
 
@@ -309,6 +312,7 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.RainbowBrick, 1, Rarity.VeryRare, 3, "Hallow", "Weather");
             resultAmount = 1;
 
+            MakeTokenRecipe(ItemID.BlessedApple, 200, Rarity.VeryCommon, 3, "UndergroundHallow");
             MakeTokenRecipe(ItemID.RodofDiscord, 500, Rarity.Common, 3, "UndergroundHallow");
             int[] hallowMimicSwaps = { ItemID.DaedalusStormbow, ItemID.FlyingKnife, ItemID.CrystalVileShard, ItemID.IlluminantHook };
             MakeSwapRecipes(hallowMimicSwaps, Rarity.VeryRare, 3, "UndergroundHallow", true);
@@ -706,6 +710,12 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.CrimsonKey, 2500, Rarity.VeryCommon, 3, "Crimson");
             MakeTokenRecipe(ItemID.HallowedKey, 2500, Rarity.VeryCommon, 3, "Hallow");
             MakeTokenRecipe(ItemID.FrozenKey, 2500, Rarity.VeryCommon, 3, "Snow");
+
+            MakeTokenRecipe(ItemID.JungleKey, 2500, Rarity.VeryCommon, 3, "UndergroundJungle");
+            MakeTokenRecipe(ItemID.CorruptionKey, 2500, Rarity.VeryCommon, 3, "UndergroundCorruption");
+            MakeTokenRecipe(ItemID.CrimsonKey, 2500, Rarity.VeryCommon, 3, "UndergroundCrimson");
+            MakeTokenRecipe(ItemID.HallowedKey, 2500, Rarity.VeryCommon, 3, "UndergroundHallow");
+            MakeTokenRecipe(ItemID.FrozenKey, 2500, Rarity.VeryCommon, 3, "UndergroundSnow");
 
             /*
              * Exploration

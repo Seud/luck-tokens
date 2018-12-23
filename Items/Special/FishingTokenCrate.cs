@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.ModLoader;
 using TokenMod.Items.Token;
 
@@ -29,7 +30,7 @@ namespace TokenMod.Items.Special
 
         public override void RightClick(Player player)
         {
-            TokenUtils.DropTokens(mod, player, 10 * TokenBalance.GetTierValue(TokenUtils.GetCurrentWorldTier()), player.getRect(), true, true, mod.ItemType<FishingToken>(), true);
+            TokenUtils.DropTokens(mod, player, 10 * TokenBalance.GetTierValue(TokenUtils.GetCurrentWorldTier()), player.getRect(), true, true, new List<int> { mod.ItemType<FishingToken>() }, true);
         }
     }
 }
