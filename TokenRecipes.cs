@@ -133,6 +133,12 @@ namespace TokenMod
              */
 
             // Tier downgrade
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier6Essence>(), 7, 1);
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier5Essence>(), 6, 1);
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier4Essence>(), 5, 1);
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier3Essence>(), 4, 1);
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier2Essence>(), 3, 1);
+            MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier1Essence>(), 2, 1);
             resultAmount = 100;
             MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier6Essence>(), 7, 100);
             MakeRawTokenRecipe(mod.ItemType<Items.Essence.Tier5Essence>(), 6, 100);
@@ -674,7 +680,7 @@ namespace TokenMod
             MakeTokenRecipe(mod.ItemType<Items.Special.ShadowLockedToken>(), 2, Rarity.None, 0, "");
             int[] shadowChest = { ItemID.DarkLance, ItemID.Flamelash, ItemID.FlowerofFire, ItemID.Sunfury, ItemID.HellwingBow };
             bonusItemID = mod.ItemType<Items.Token.ShadowToken>();
-            MakeSwapRecipes(shadowChest, Rarity.Chest, 0, "Underworld");
+            MakeSwapRecipes(shadowChest, Rarity.Chest, 0, "Underworld", true);
             bonusItemID = -1;
 
             // Ocean Chests
@@ -840,13 +846,13 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.ObsidianSwordfish, 7 * 10, Rarity.Fishing, 3, "Fishing", "Underground");
 
             // Crates
-            MakeTokenRecipe(ItemID.SailfishBoots, 20 * 10, Rarity.Fishing, 1, "Fishing");
-            MakeTokenRecipe(ItemID.TsunamiInABottle, 20 * 10, Rarity.Fishing, 1, "Fishing");
-            MakeTokenRecipe(ItemID.GingerBeard, 25 * 10, Rarity.Fishing, 1, "Fishing");
-            MakeTokenRecipe(ItemID.TartarSauce, 21 * 10, Rarity.Fishing, 1, "Fishing");
-            MakeTokenRecipe(ItemID.FalconBlade, 16 * 10, Rarity.Fishing, 1, "Fishing");
-            MakeTokenRecipe(ItemID.Sundial, 60 * 10, Rarity.Fishing, 3, "Fishing");
-            MakeTokenRecipe(ItemID.HardySaddle, 10 * 40, Rarity.Fishing, 1, "Fishing");
+            MakeTokenRecipe(ItemID.SailfishBoots, 20, Rarity.FishingCrate, 1, "Fishing");
+            MakeTokenRecipe(ItemID.TsunamiInABottle, 20, Rarity.FishingCrate, 1, "Fishing");
+            MakeTokenRecipe(ItemID.GingerBeard, 25, Rarity.FishingCrate, 1, "Fishing");
+            MakeTokenRecipe(ItemID.TartarSauce, 21, Rarity.FishingCrate, 1, "Fishing");
+            MakeTokenRecipe(ItemID.FalconBlade, 16, Rarity.FishingCrate, 1, "Fishing");
+            MakeTokenRecipe(ItemID.Sundial, 60, Rarity.FishingCrate, 3, "Fishing");
+            MakeTokenRecipe(ItemID.HardySaddle, 10 * 4, Rarity.FishingCrate, 1, "Fishing");
 
             /*
              * Furniture

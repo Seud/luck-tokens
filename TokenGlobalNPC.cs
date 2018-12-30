@@ -10,18 +10,15 @@ namespace TokenMod.NPCs
 
         public override void NPCLoot(NPC npc)
         {
-            Player plr = Main.player[Player.FindClosest(npc.position, npc.width, npc.height)];
+            // If the NPC was a boss, use special check
+            if(TokenUtils.CheckBoss(mod, npc)) return;
 
-            // Token drop check
-            if (npc.lifeMax > 1 && !npc.friendly && npc.value > 0f)
+            if (npc.lifeMax > 1 && !npc.friendly && npc.value > 0f && !npc.boss)
             {
-                if(npc.boss)
-                    TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), true, true, new List<int> { mod.ItemType<Items.Token.BossToken>() } );
-                else
-                    TokenUtils.DropTokens(mod, plr, npc.value, npc.getRect(), false, true, TokenUtils.GetLocationTokens(mod, plr));
-            } else if (npc.lifeMax > 1 && (npc.friendly || npc.damage == 0))
+                TokenUtils.DropTokens(mod, null, npc.value, npc, false, 1, true, TokenUtils.GetLocationTokens(mod, Main.player[Player.FindClosest(npc.position, npc.width, npc.height)]));
+            } else if (npc.lifeMax > 1 && npc.friendly)
             {
-                TokenUtils.DropTokens(mod, plr, TokenBalance.NPC_VALUE, npc.getRect(), false, false, new List<int> { mod.ItemType<Items.Token.NPCToken>() } );
+                TokenUtils.DropTokens(mod, null, TokenBalance.NPC_VALUE, npc, false, 1, false, new List<int> { mod.ItemType<Items.Token.NPCToken>() } );
             }
 
         }

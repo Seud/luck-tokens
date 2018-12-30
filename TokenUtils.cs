@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -113,30 +112,35 @@ namespace TokenMod
 
         /*
          * Automatically drop tokens and essence
-         * tokenOverride guarantees a certain token if set to a positive number, or does not generate any token if negative
          */
-        public static void DropTokens(Mod mod, Player plr, float value, Rectangle rect, bool vic, bool dropEssence, List<int> tokens, bool playerSpawn = false)
+        public static void DropTokens(Mod mod, Player plr, float value, NPC npc, bool vic, double dropMult, bool dropEssence, List<int> tokens, bool instancedDrop = false)
         {
             int tier = GetCurrentWorldTier();
 
             // Calculate quantities
-            int dropQuantity = GetDropAmount(value, tier, vic);
-            if (dropQuantity == 0)
-            {
-                if (vic && value > 0) dropQuantity = 1; else return;
-            }
+            int dropQuantity = GetDropAmount(value, tier, vic, dropMult);
+            if (dropQuantity == 0) return;
 
             int tierEssence = GetTierEssence(mod, tier);
 
             // Drop the items
-            if (playerSpawn)
+            if (npc == null)
             {
+                if (plr == null) return;
                 if (dropEssence) plr.QuickSpawnItem(tierEssence, dropQuantity);
                 foreach (int token in tokens) plr.QuickSpawnItem(token, dropQuantity);
-            } else
+                return;
+            }
+
+            if (instancedDrop)
             {
-                if (dropEssence) Item.NewItem(rect, tierEssence, dropQuantity);
-                foreach (int token in tokens) Item.NewItem(rect, token, dropQuantity);
+                if (dropEssence) npc.DropItemInstanced(npc.position, npc.Size, tierEssence, dropQuantity, true);
+                foreach (int token in tokens) npc.DropItemInstanced(npc.position, npc.Size, token, dropQuantity, true);
+                return;
+            } else {
+                if (dropEssence) Item.NewItem(npc.getRect(), tierEssence, dropQuantity);
+                foreach (int token in tokens) Item.NewItem(npc.getRect(), token, dropQuantity);
+                return;
             }
         }
 
@@ -144,14 +148,27 @@ namespace TokenMod
          * Calculates an amount of dropped essence or tokens depending on value
          * vic determines whether the value affects drop chance or drop quantity (Average is the same)
          */
-        public static int GetDropAmount(float value, int tier, bool vic)
+        public static int GetDropAmount(float value, int tier, bool vic, double dropMult)
         {
-            double valueMult = TokenBalance.GetValueMult(value, tier);
+            double valueMult = TokenBalance.GetValueMult(value, tier) * dropMult;
 
             double tokenDropChance = TokenBalance.DROP_BASE_RATE * (vic ? valueMult : 1);
             int mult = vic ? 1 : (int) Math.Ceiling(valueMult);
 
             return GetTokenAmount(tokenDropChance) * mult;
+        }
+
+        /*
+         * Checks whether the NPC is a boss and manage its drops if needed
+         */
+        public static bool CheckBoss(Mod mod, NPC npc)
+        {
+            if (!TokenBalance.BOSS_DICT.ContainsKey(npc.type)) return false;
+
+            float bossValue = TokenBalance.BOSS_DICT[npc.type];
+            if (Main.expertMode) bossValue *= 2;
+            DropTokens(mod, null, bossValue, npc, true, 1, true, new List<int> { mod.ItemType<Items.Token.BossToken>() }, Main.expertMode);
+            return true;
         }
     }
 

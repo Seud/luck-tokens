@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using Terraria.ID;
 
 namespace TokenMod
 {
     public enum Rarity
     {
         None,
-        VeryCommon, Common, Uncommon, Rare, VeryRare,
+        VeryCommon, Common, Uncommon, Rare, VeryRare, Boss,
         VeryCommonObject, CommonObject, UncommonObject, RareObject, VeryRareObject,
         Chest, RareChest, Furniture, Dye,
-        Boss, Fishing, QuestReward, TravelingMerchant, Redeem
+        Fishing, FishingCrate, QuestReward,
+        TravelingMerchant, Redeem
     };
 
     public class TokenBalance
@@ -24,11 +27,20 @@ namespace TokenMod
         // Global value multiplier
         public const float VALUE_MULTIPLIER = 0.1f;
 
+        // Global value power for high value enemies
+        public const double VALUE_POWER = 0.5;
+
         // Global multiplier for costs
         public const double GLOBAL_COST_MULTIPLIER = 0.1;
 
-        // Chance that a fishing catch is replaced by a token
-        public const double FISHING_TOKEN_CHANCE = 0.1;
+        // Base value multiplier of a boss (Compared to average enemy of tier)
+        public const float BOSS_VALUE_MULT = 100f;
+
+        // Base value of a fish
+        public const float BASE_FISH_VALUE = 100f;
+
+        // Drop multiplier of a quest
+        public const int QUEST_MULTIPLIER = 50;
 
         // Value of an Eternia Token
         public const float ETERNIA_VALUE = 10000f;
@@ -45,10 +57,13 @@ namespace TokenMod
         public const double RARITY_ER = 500;
 
         public const double RARITY_FISH = 2;
-        public const double RARITY_QUEST = 10;
+        public const double RARITY_FISH_RARE = 20;
         public const double RARITY_BOSS = 5;
         public const double RARITY_TM = 6;
         public const double RARITY_REDEEM = 1;
+
+        // Boss value
+        public static Dictionary<int, float> BOSS_DICT = GenerateBossDict();
 
         /*
          * Retrieves cost modifier for a given Rarity
@@ -57,18 +72,17 @@ namespace TokenMod
         {
             switch (rarity)
             {
-                
                 case Rarity.VeryCommon: return RARITY_VC;
 
                 case Rarity.VeryCommonObject:
                 case Rarity.Common: return RARITY_C;
 
                 case Rarity.CommonObject:
-                case Rarity.Furniture:
                 case Rarity.Uncommon: return RARITY_U;
 
                 case Rarity.Chest:
                 case Rarity.Dye:
+                case Rarity.Furniture:
                 case Rarity.UncommonObject:
                 case Rarity.Rare: return RARITY_R;
 
@@ -80,7 +94,8 @@ namespace TokenMod
                     
                 case Rarity.Boss: return RARITY_BOSS;
                 case Rarity.Fishing: return RARITY_FISH;
-                case Rarity.QuestReward: return RARITY_QUEST;
+                case Rarity.FishingCrate:
+                case Rarity.QuestReward: return RARITY_FISH_RARE;
                 case Rarity.TravelingMerchant: return RARITY_TM;
 
                 case Rarity.Redeem: return 1;
@@ -90,57 +105,32 @@ namespace TokenMod
         }
 
         /*
-         * Retrieves value for a given Tier
-         * Roughly equal to the value of an enemy of the matching tier
+         * Retrieves base value for a given Tier
+         * Roughly equal to the value of an enemy of the matching tier, and increases as spawnrates rise
          */
         public static float GetTierValue(int tier)
         {
-            switch (tier)
-            {
-                case 0: return 25f;
-                case 1: return 100f;
-                case 2: return 250f;
-                case 3: return 400f;
-                case 4: return 700f;
-                case 5: return 1000f;
-                case 6: return 1200f;
-                case 7: return 1500f;
-                default: return 100f;
-            }
+            return 25f * (tier + 1) * (tier + 1);
         }
 
         /*
          * Calculates price or droprate multiplier based on value and tier
+         * Linear until tierValue is reached, then becomes fractional to avoid ultimate drops on high value enemies like Mimics
          */
-        public static double GetValueMult(float value, int tier)
+        public static double GetValueMult(float value, int tier, bool noScaling = false)
         {
-            double power = 1;
-            switch(tier)
+            if (noScaling) return value;
+
+            float tierValue = GetTierValue(tier);
+            if(value <= tierValue)
             {
-                case 7:
-                    power = 1;
-                    break;
-                case 6:
-                    power = 0.9;
-                    break;
-                case 5:
-                    power = 0.9;
-                    break;
-                case 4:
-                    power = 0.8;
-                    break;
-                case 3:
-                    power = 0.8;
-                    break;
-                case 2:
-                    power = 0.7;
-                    break;
-                case 1:
-                default:
-                    power = 0.7;
-                    break;
+                return value * VALUE_MULTIPLIER;
+            } else
+            {
+                double overValue = value / tierValue;
+                overValue = Math.Pow(overValue, VALUE_POWER);
+                return tierValue * overValue * VALUE_MULTIPLIER;
             }
-            return Math.Pow(value * VALUE_MULTIPLIER, power);
         }
 
         /*
@@ -151,7 +141,65 @@ namespace TokenMod
             // Calculate Rarity and Tier modifiers
             double costMod = GetRareModifier(rarity) * GetValueMult(GetTierValue(tier), tier) * GLOBAL_COST_MULTIPLIER;
 
-            return (int) Math.Ceiling(Math.Max(0.1, dropRate) * costMod);
+            return (int) Math.Round(Math.Max(0.1, dropRate) * costMod);
+        }
+
+        /*
+         * Calculates the value of a boss based on its tier and relative value
+         */
+        public static float GetBossValue(int tier, float mult)
+        {
+            return mult * GetTierValue(tier) * BOSS_VALUE_MULT;
+        }
+
+        /*
+         * Generates the dictionary of boss ID and base values
+         */
+        public static Dictionary<int, float> GenerateBossDict()
+        {
+            Dictionary<int, float> dict = new Dictionary<int, float>
+            {
+
+                // Pre-Hardmode
+                { NPCID.KingSlime, GetBossValue(1, 0.4f) },
+                { NPCID.EyeofCthulhu, GetBossValue(1, 1f) },
+                { NPCID.EaterofWorldsHead, GetBossValue(2, 0.02f) },
+                { NPCID.EaterofWorldsBody, GetBossValue(2, 0.02f) },
+                { NPCID.EaterofWorldsTail, GetBossValue(2, 0.02f) },
+                { NPCID.Creeper, GetBossValue(2, 0.02f) },
+                { NPCID.BrainofCthulhu, GetBossValue(2, 0.4f) },
+                { NPCID.QueenBee, GetBossValue(2, 2f) },
+                { NPCID.SkeletronHead, GetBossValue(2, 2f) },
+
+                // Hardmode
+                { NPCID.WallofFlesh, GetBossValue(3, 1f) },
+                { NPCID.Retinazer, GetBossValue(4, 0.5f) },
+                { NPCID.Spazmatism, GetBossValue(4, 0.5f) },
+                { NPCID.TheDestroyer, GetBossValue(4, 1f) },
+                { NPCID.SkeletronPrime, GetBossValue(4, 1f) },
+                { NPCID.Plantera, GetBossValue(5, 1f) },
+                { NPCID.Golem, GetBossValue(6, 1f) },
+                { NPCID.DukeFishron, GetBossValue(6, 1.5f) },
+
+                // Lunar event
+                { NPCID.CultistBoss, GetBossValue(7, 0.1f) },
+                { NPCID.LunarTowerSolar, GetBossValue(7, 0.1f) },
+                { NPCID.LunarTowerVortex, GetBossValue(7, 0.1f) },
+                { NPCID.LunarTowerNebula, GetBossValue(7, 0.1f) },
+                { NPCID.LunarTowerStardust, GetBossValue(7, 0.1f) },
+                { NPCID.MoonLordCore, GetBossValue(7, 1f) },
+
+                // Invasions
+                { NPCID.PirateShip, GetBossValue(3, 0.25f) },
+                { NPCID.MourningWood, GetBossValue(5, 0.05f) },
+                { NPCID.Pumpking, GetBossValue(5, 0.25f) },
+                { NPCID.Everscream, GetBossValue(5, 0.05f) },
+                { NPCID.SantaNK1, GetBossValue(5, 0.1f) },
+                { NPCID.IceQueen, GetBossValue(5, 0.25f) },
+                { NPCID.MartianSaucerCore, GetBossValue(6, 0.25f) }
+            };
+
+            return dict;
         }
     }
 }

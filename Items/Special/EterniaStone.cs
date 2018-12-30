@@ -30,7 +30,7 @@ namespace TokenMod.Items.Special
 
         public override void RightClick(Player player)
         {
-            TokenUtils.DropTokens(mod, player, TokenBalance.ETERNIA_VALUE, player.getRect(), true, true, new List<int> { mod.ItemType<InvasionToken>(), mod.ItemType<BossToken>() }, true);
+            TokenUtils.DropTokens(mod, player, TokenBalance.ETERNIA_VALUE, null, true, 1, true, new List<int> { mod.ItemType<InvasionToken>(), mod.ItemType<BossToken>() });
         }
     }
 }

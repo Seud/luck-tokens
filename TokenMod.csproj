@@ -77,11 +77,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WeightedInt.cs" />
     <Compile Include="Items\Essence\Tier0Essence.cs" />
     <Compile Include="Items\Special\ChaoticEssence.cs" />
     <Compile Include="Items\Special\MeteorCharm.cs" />
-    <Compile Include="Items\TokenGlobalItem.cs" />
     <Compile Include="Items\Token\BaseToken.cs" />
     <Compile Include="Items\Token\BossToken.cs" />
     <Compile Include="Items\Token\CorruptionToken.cs" />
