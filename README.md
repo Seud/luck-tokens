@@ -26,13 +26,14 @@ New items are sorted in three categories that are used for various purposes.
   * Tier 6 : Post-Golem, pre-Moon Lord items
   * Tier 7 : Post-Moon Lord items (Not a lot !)
 
-  Tier essence can be downgraded for free. In addition, Location tokens can be recycled at a 4-to-1 ratio into the current Tier essence.
+  Tier essence can be downgraded for free.
+
 * Special Tokens and items are acquired differently and have various uses
-  * Boss Tokens are acquired from bosses (Or Treasure Bags if Expert mode is enabled) and used to craft Boss items
+  * Boss Tokens are acquired from bosses and used to craft Boss items
   * Eternia Stones are exchanged 1:1 from Defender Medals and contain both Boss and Invasion Tokens as well as Tier Essence
-  * Fishing Crates are acquired from fishing and contain Fishing Tokens (Used for crafting special Fish and Fishing quest rewards) and Tier Essence
+  * Fishing Tokens are acquired by fishing or completing quests and are used for crafting special Fish and quest rewards
   * Invasion Tokens are acquired from Invasion-type event (Both progress and time-limited) and used to craft related items
-  * NPC Tokens can be acquired by killing critters ~~and other friendlies~~ and are used to craft NPC drops
+  * NPC Tokens can be acquired by killing critters and other friendlies and are used to craft NPC drops (But you would *never*... right ?)
   * Shadow Locked Tokens can be created for a marginal cost and unlocked with a Shadow Key to create Shadow Chest items
   * Traveling Merchant Tokens are purchased from the Merchant and are used to create Traveling Merchant items or to duplicate them (The latter does not cost Essence or Tokens). Each token is worth 10 silver and used to create 10 silver worth of Traveling Merchant items.
   * Weather Tokens are acquired during special weather and are used to create items from Weather-restricted enemies
@@ -42,8 +43,8 @@ New items are sorted in three categories that are used for various purposes.
 
 Most sources of Tier Essence will give the same amount of the appropriate Location or Special token. This amount is determined by two things :
 
-- A base value, which is equal to the base coin value of enemies or a fixed value for item sources (e.g. Eternia Stone). Usually, the harder the enemy, the more Essence it can drop
-- A tier power, which slowly rises along with the tier of the world. Since the final value is raised to this power, the more advanced the world is, the more essence will drop from it even from the same enemies
+- A base value, which is equal to the base coin value of enemies or a fixed value for other sources (e.g. Eternia Stone). Usually, the harder the enemy, the more Essence it can drop
+- A value "softcap" which rises with world tier and lowers amount of tokens granted by high-value enemies (Do note that higher value always equates more tokens, the scaling is just fractional instead)
 
 The cost of an item is calculated by a simple formula that multiplies the item rarity (Calculated from the source rarity and likelihood to give the item) with the average amount of Essence that would be given out by a standard enemy of this tier.
 
@@ -55,7 +56,7 @@ All recipes created by the mod are available at any anvil. Most recipes follow o
 
 * Items with Normal recipes are crafted using Tier tokens and up to two special or Location tokens. Most recipes follow this schema. Costs rise with item rarity and tier. Some items require additional components outlining special acquisition rules (For example, creating Dungeon items require a Golden Key)
 * Items with Swap recipes can additionally be crafted using another item of the same pool and a discounted price in Tokens and Location. This is mostly relevant for boss and chest/mimic items.
-* Items with Traveling Merchant recipes can be duplicated. Duplicating cheap objects (e.g. Dynasty Wood) requires a stack of the original size but only requires Traveling Merchant tokens.
+* Items with Traveling Merchant recipes can be duplicated. Duplicating cheap objects (e.g. Dynasty Wood) requires a stack of the original size. Duplicating simulates buying more of an item and therefore only costs Traveling Merchant Tokens.
 
 Currently, recipes include the following (As a general rule, craftable or purchasable items as well as consumables are excluded) :
 
@@ -63,7 +64,7 @@ Currently, recipes include the following (As a general rule, craftable or purcha
 * Almost all enemy drops from invasion events
 * All enemy drops from rare enemies (Showing up on the Lifeform Analyzer)
 * Almost all non-guaranteed Boss items (Excluding Dev items, Expert items and Achievement items, e.g. 0x33's Aviators)
-* Most friendly NPC items (But you would *never*... right ?)
+* Most friendly NPC items
 * Most primary chest items (e.g. Magic Mirror, Flamelash)
 * Most other useful exploration items (e.g. Life Crystal/Fruits, Enchanted Swords, Shadow/Crimson Orb items)
 * Most Wireable traps
@@ -77,3 +78,13 @@ Currently, recipes include the following (As a general rule, craftable or purcha
 * Angler items
 * Traveling and Skeleton Merchant items
 * Seasonal items
+
+## Contact Info
+
+Find me on Terraria Community Forums ! https://forums.terraria.org/index.php?members/seud.11063/
+
+Find me on Steam ! https://steamcommunity.com/id/seudazereza
+
+Find me on Discord ! Seud#4723
+
+Find me on Github ! You are here

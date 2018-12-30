@@ -7,3 +7,35 @@ Fishing, no comment needed.
 Does that sound familiar ? If yes, you have been visited by the R.N.Goddess and found unworthy. But thanks to this mod, your troubles are over !
 
 TokenMod is a mod that adds special crafting components to the game, dropping randomly within the world. These components allow you to craft (almost) all rare or hard-to-find items in the game from the comfort of your home.
+
+Click "More information" below to access my GitHub, where you can find my contact info !
+
+Quick changelog (See github commits for full changes)
+
+v1.2 - Major changes to the drop/cost formula, bosses and fishing
+Value-to-essence formula completely changed, prices and drops are higher now
+Boss bags no longer drops tokens - bosses directly do now, using different values (Expert drops are instanced like bags - experimental)
+Fishing now grants tokens directly instead of crates - rarer but coniderably more
+Fishing quests now grant tokens, scaling with quests completed
+Fixed Shadow chest items not being craftable (only swappable)
+Essence can now be recycled individually in addition of by groups of 100
+
+v1.1 - Major changes to tokens
+All eligible location tokens now drop instead of a random one
+Tokens can no longer be recycled into Essence
+Normal biome tokens no longer drop underground
+Weather and Invasion tokens now only drop on the Surface
+Item recipes have been updated
+Eternia Stones now drop both Invasion and Boss tokens instead of either randomly
+
+v1.0.2 - Bugfixes
+Fixed Amarok and Hel-Fire tier (Was 2, now 3)
+Tweaked Token distribution to be weighted towards "rarer" tokens
+
+v1.0.1 - Bugfixes
+Lowered stack size to 9999 (Fixes dropped stacks disappearing in MP)
+Fixed right-clickables not working in MP
+Most guaranteed essence/token sources always drop at least 1 essence/token
+
+v1.0.0
+First release

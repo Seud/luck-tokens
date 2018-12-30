@@ -126,6 +126,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build.txt" />
+    <Content Include="description.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
