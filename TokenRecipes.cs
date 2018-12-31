@@ -341,15 +341,15 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.ShadowbeamStaff, 20, Rarity.Rare, 5, "Dungeon");
             MakeTokenRecipe(ItemID.SpectreStaff, 20, Rarity.Rare, 5, "Dungeon");
             MakeTokenRecipe(ItemID.InfernoFork, 20, Rarity.Rare, 5, "Dungeon");
-            MakeTokenRecipe(ItemID.PaladinsHammer, 15, Rarity.VeryRare, 5, "Dungeon");
-            MakeTokenRecipe(ItemID.PaladinsShield, 10.5, Rarity.VeryRare, 5, "Dungeon");
-            MakeTokenRecipe(ItemID.BlackBelt, 12, Rarity.VeryRare, 5, "Dungeon");
-            MakeTokenRecipe(ItemID.Tabi, 12, Rarity.VeryRare, 5, "Dungeon");
-            MakeTokenRecipe(ItemID.TacticalShotgun, 13, Rarity.VeryRare, 5, "Dungeon");
-            MakeTokenRecipe(ItemID.RocketLauncher, 18, Rarity.VeryRare, 5, "Dungeon");
-            MakeTokenRecipe(ItemID.SniperRifle, 13, Rarity.VeryRare, 5, "Dungeon");
-            MakeTokenRecipe(ItemID.SniperScope, 12, Rarity.VeryRare, 5, "Dungeon");
-            MakeTokenRecipe(ItemID.SWATHelmet, 12, Rarity.VeryRare, 5, "Dungeon");
+            MakeTokenRecipe(ItemID.PaladinsHammer, 15, Rarity.Rare, 5, "Dungeon");
+            MakeTokenRecipe(ItemID.PaladinsShield, 10.5, Rarity.Rare, 5, "Dungeon");
+            MakeTokenRecipe(ItemID.BlackBelt, 12, Rarity.Rare, 5, "Dungeon");
+            MakeTokenRecipe(ItemID.Tabi, 12, Rarity.Rare, 5, "Dungeon");
+            MakeTokenRecipe(ItemID.TacticalShotgun, 13, Rarity.Rare, 5, "Dungeon");
+            MakeTokenRecipe(ItemID.RocketLauncher, 18, Rarity.Rare, 5, "Dungeon");
+            MakeTokenRecipe(ItemID.SniperRifle, 13, Rarity.Rare, 5, "Dungeon");
+            MakeTokenRecipe(ItemID.RifleScope, 12, Rarity.Rare, 5, "Dungeon");
+            MakeTokenRecipe(ItemID.SWATHelmet, 12, Rarity.Rare, 5, "Dungeon");
 
             // Space mobs
             MakeTokenRecipe(ItemID.GiantHarpyFeather, 200, Rarity.Common, 1, "Space");

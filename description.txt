@@ -12,7 +12,11 @@ Click "More information" below to access my GitHub, where you can find my contac
 
 Quick changelog (See github commits for full changes)
 
-v1.2 - Major changes to the drop/cost formula, bosses and fishing
+v1.2.0.1 - Minor fix
+Fixed the Sniper scope being craftable instead of the Rifle scope
+Lowered the cost of post-plantera dungeon melee and ranged enemy drops
+
+v1.2.0 - Major changes to the drop/cost formula, bosses and fishing
 Value-to-essence formula completely changed, prices and drops are higher now
 Boss bags no longer drops tokens - bosses directly do now, using different values (Expert drops are instanced like bags - experimental)
 Fishing now grants tokens directly instead of crates - rarer but coniderably more
@@ -20,7 +24,7 @@ Fishing quests now grant tokens, scaling with quests completed
 Fixed Shadow chest items not being craftable (only swappable)
 Essence can now be recycled individually in addition of by groups of 100
 
-v1.1 - Major changes to tokens
+v1.1.0 - Major changes to tokens
 All eligible location tokens now drop instead of a random one
 Tokens can no longer be recycled into Essence
 Normal biome tokens no longer drop underground
