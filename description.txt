@@ -14,8 +14,8 @@ Click "Visit the Mod's Homepage" below to access the mod's GitHub, where you can
 
 Quick changelog (See github commits for full changes)
 
-v1.2.1.1 - Furniture swaps
-Many uncraftable furniture items can now be swapped with similar furniture to offset the new cost
+v1.2.2 - Furniture swaps
+Many uncraftable furniture items can now be swapped with similar furniture
 
 v1.2.1 - Further balancing and new icon
 Most uncraftable furniture items have changed costs - some are cheaper, others are more expensive (More consistent with cost of drops)
