@@ -10,15 +10,10 @@ TokenMod is a mod that adds special crafting components to the game, dropping ra
 
 Click "Visit the Mod's Homepage" below to access the mod's GitHub, where you can find the source code and my contact info !
 
-(Note that if your computer is slow, it may take a long time to build recipes on startup or reload)
-
 Quick changelog (See github commits for full changes)
 
-v1.2.2 - Furniture swaps
-Many uncraftable furniture items can now be swapped with similar furniture
-
 v1.2.1 - Further balancing and new icon
-Most uncraftable furniture items have changed costs - some are cheaper, others are more expensive (More consistent with cost of drops)
+Most furniture items have changed costs - some are cheaper, others are more expensive (More consistent with cost of drops)
 Fixed inconsistent "set" drops that were often too cheap and sometimes too expensive
 
 v1.2.0.1 - Minor fix
