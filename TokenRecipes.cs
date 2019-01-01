@@ -1,5 +1,4 @@
-﻿using System;
-using Terraria.ID;
+﻿using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TokenMod
@@ -31,7 +30,7 @@ namespace TokenMod
 
             recipe.AddTile(TOKEN_CRAFTING_STATION);
 
-            if (swapItemID > 0) recipe.AddIngredient(swapItemID, 1);
+            if (swapItemID > 0) recipe.AddIngredient(swapItemID, resultAmount);
             if (cost > 0)
             {
                 if (tier >= 0) recipe.AddIngredient(TokenUtils.GetTierEssence(mod, tier), cost);
@@ -863,10 +862,10 @@ namespace TokenMod
             int[] spaceBanners = { ItemID.WorldBanner, ItemID.SunBanner, ItemID.GravityBanner };
             int[] underworldBanners = { ItemID.HellboundBanner, ItemID.LostHopesofManBanner, ItemID.HellHammerBanner, ItemID.ObsidianWatcherBanner, ItemID.HelltowerBanner, ItemID.LavaEruptsBanner };
             int[] pyramidBanners = { ItemID.AnkhBanner, ItemID.SnakeBanner, ItemID.OmegaBanner };
-            MakeTokenRecipes(dungeonBanners, dungeonBanners.Length, Rarity.CommonObject, 2, "Dungeon");
-            MakeTokenRecipes(spaceBanners, spaceBanners.Length, Rarity.UncommonObject, 1, "Space");
-            MakeTokenRecipes(underworldBanners, underworldBanners.Length, Rarity.CommonObject, 2, "Underworld");
-            MakeTokenRecipes(pyramidBanners, pyramidBanners.Length, Rarity.RareObject, 1, "Desert");
+            MakeSwapRecipes(dungeonBanners, Rarity.CommonObject, 2, "Dungeon", true);
+            MakeSwapRecipes(spaceBanners, Rarity.UncommonObject, 1, "Space", true);
+            MakeSwapRecipes(underworldBanners, Rarity.CommonObject, 2, "Underworld", true);
+            MakeSwapRecipes(pyramidBanners, Rarity.RareObject, 1, "Desert", true);
 
             // Uncraftable chests
             MakeTokenRecipe(ItemID.GoldChest, 1, Rarity.Chest, 1, "Underground");
@@ -896,51 +895,36 @@ namespace TokenMod
             int[] pinkDungeonDecorations = { ItemID.PinkDungeonBathtub, ItemID.PinkDungeonBed, ItemID.PinkDungeonBookcase, ItemID.PinkDungeonCandelabra, ItemID.PinkDungeonCandle,
                 ItemID.PinkDungeonChair, ItemID.PinkDungeonChandelier, ItemID.PinkDungeonDoor, ItemID.PinkDungeonDresser, ItemID.PinkDungeonLamp, ItemID.PinkDungeonPiano, ItemID.PinkDungeonSofa,
                 ItemID.PinkDungeonTable, ItemID.PinkDungeonVase, ItemID.PinkDungeonWorkBench };
-            int totalDecorations = dungeonDecorations.Length + blueDungeonDecorations.Length;
-            MakeTokenRecipes(dungeonDecorations, totalDecorations, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.BlueBrick;
-            MakeTokenRecipes(blueDungeonDecorations, totalDecorations, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.GreenBrick;
-            MakeTokenRecipes(greenDungeonDecorations, totalDecorations, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.PinkBrick;
-            MakeTokenRecipes(pinkDungeonDecorations, totalDecorations, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = -1;
+            MakeSwapRecipes(dungeonDecorations, Rarity.VeryCommonObject, 2, "Dungeon", true);
+            MakeSwapRecipes(blueDungeonDecorations, Rarity.VeryCommonObject, 2, "Dungeon", true);
+            MakeSwapRecipes(greenDungeonDecorations, Rarity.VeryCommonObject, 2, "Dungeon", true);
+            MakeSwapRecipes(pinkDungeonDecorations, Rarity.VeryCommonObject, 2, "Dungeon", true);
 
             resultAmount = 50;
-            int[] dungeonPlatforms = { ItemID.DungeonShelf, ItemID.WoodShelf, ItemID.MetalShelf, ItemID.BrassShelf, ItemID.Book };
-            MakeTokenRecipes(dungeonPlatforms, dungeonPlatforms.Length + 1, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.BlueBrick;
-            MakeTokenRecipe(ItemID.BlueBrickPlatform, dungeonPlatforms.Length + 1, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.GreenBrick;
-            MakeTokenRecipe(ItemID.GreenBrickPlatform, dungeonPlatforms.Length + 1, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.PinkBrick;
-            MakeTokenRecipe(ItemID.PinkBrickPlatform, dungeonPlatforms.Length + 1, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = -1;
+            int[] dungeonPlatforms = { ItemID.DungeonShelf, ItemID.WoodShelf, ItemID.MetalShelf, ItemID.BrassShelf, ItemID.Book, ItemID.PinkBrickPlatform, ItemID.GreenBrickPlatform, ItemID.BlueBrickPlatform };
+            MakeSwapRecipes(dungeonPlatforms, Rarity.VeryCommonObject, 2, "Dungeon", true);
             resultAmount = 1;
 
             int[] underworldDecorations = { ItemID.ObsidianBathtub, ItemID.ObsidianBed, ItemID.ObsidianBookcase, ItemID.ObsidianCandelabra, ItemID.ObsidianCandle, ItemID.ObsidianChair,
                 ItemID.ObsidianChandelier, ItemID.ObsidianDoor, ItemID.ObsidianDresser, ItemID.ObsidianLamp, ItemID.ObsidianPiano, ItemID.ObsidianSofa, ItemID.ObsidianTable, ItemID.ObsidianVase,
                 ItemID.ObsidianWorkBench };
-            MakeTokenRecipes(underworldDecorations, underworldDecorations.Length, Rarity.CommonObject, 2, "Underworld");
+            MakeSwapRecipes(underworldDecorations, Rarity.CommonObject, 2, "Underworld", true);
 
             /*
              * Statues
              */
 
-            int[] mobStatues = { ItemID.BatStatue, ItemID.ChestStatue, ItemID.CrabStatue, ItemID.JellyfishStatue, ItemID.PiranhaStatue, ItemID.SharkStatue,
+            int[] statues = { ItemID.BatStatue, ItemID.ChestStatue, ItemID.CrabStatue, ItemID.JellyfishStatue, ItemID.PiranhaStatue, ItemID.SharkStatue,
                 ItemID.SkeletonStatue, ItemID.SlimeStatue, ItemID.WallCreeperStatue, ItemID.UnicornStatue, ItemID.DripplerStatue, ItemID.WraithStatue,
                 ItemID.BoneSkeletonStatue, ItemID.UndeadVikingStatue, ItemID.MedusaStatue, ItemID.HarpyStatue, ItemID.PigronStatue, ItemID.HopliteStatue,
-                ItemID.GraniteGolemStatue, ItemID.ZombieArmStatue, ItemID.BloodZombieStatue };
-            int[] functionalStatues = { ItemID.KingStatue, ItemID.QueenStatue, ItemID.BombStatue, ItemID.HeartStatue, ItemID.StarStatue };
-            int[] decorationStatues = { ItemID.MushroomStatue, ItemID.AnvilStatue, ItemID.ArmorStatue, ItemID.AxeStatue, ItemID.BoomerangStatue, ItemID.BootStatue,
+                ItemID.GraniteGolemStatue, ItemID.ZombieArmStatue, ItemID.BloodZombieStatue,
+                ItemID.KingStatue, ItemID.QueenStatue, ItemID.BombStatue, ItemID.HeartStatue, ItemID.StarStatue,
+                ItemID.MushroomStatue, ItemID.AnvilStatue, ItemID.ArmorStatue, ItemID.AxeStatue, ItemID.BoomerangStatue, ItemID.BootStatue,
                 ItemID.BowStatue, ItemID.CorruptStatue, ItemID.CrossStatue, ItemID.EyeballStatue, ItemID.GargoyleStatue, ItemID.GloomStatue, ItemID.GoblinStatue,
                 ItemID.HammerStatue, ItemID.HornetStatue, ItemID.ImpStatue, ItemID.PickaxeStatue, ItemID.PillarStatue, ItemID.PotStatue, ItemID.PotionStatue,
                 ItemID.ReaperStatue, ItemID.ShieldStatue, ItemID.SpearStatue, ItemID.SunflowerStatue, ItemID.SwordStatue, ItemID.TreeStatue, ItemID.WomanStatue,
                 ItemID.LihzahrdStatue, ItemID.LihzahrdGuardianStatue, ItemID.LihzahrdWatcherStatue };
-            int totalStatues = mobStatues.Length + functionalStatues.Length + decorationStatues.Length;
-            MakeTokenRecipes(mobStatues, totalStatues, Rarity.CommonObject, 1, "Underground");
-            MakeTokenRecipes(functionalStatues, totalStatues, Rarity.CommonObject, 1, "Underground");
-            MakeTokenRecipes(decorationStatues, totalStatues, Rarity.CommonObject, 1, "Underground");
+            MakeSwapRecipes(statues, Rarity.CommonObject, 1, "Underground", true);
 
             /*
              * Paintings
@@ -948,15 +932,15 @@ namespace TokenMod
 
             int[] undergroundPaintings = { ItemID.AmericanExplosive, ItemID.CrownoDevoursHisLunch, ItemID.Discover, ItemID.FatherofSomeone, ItemID.FindingGold, ItemID.GloriousNight, ItemID.GuidePicasso,
                 ItemID.Land, ItemID.TheMerchant, ItemID.NurseLisa, ItemID.OldMiner, ItemID.RareEnchantment, ItemID.Sunflowers, ItemID.TerrarianGothic, ItemID.Waldo };
-            MakeTokenRecipes(undergroundPaintings, undergroundPaintings.Length, Rarity.CommonObject, 1, "Underground");
+            MakeSwapRecipes(undergroundPaintings, Rarity.CommonObject, 1, "Underground", true);
             int[] dungeonPaintings = { ItemID.BloodMoonRising, ItemID.BoneWarp, ItemID.TheCreationoftheGuide, ItemID.TheCursedMan, ItemID.TheDestroyer, ItemID.Dryadisque, ItemID.TheEyeSeestheEnd,
                 ItemID.FacingtheCerebralMastermind, ItemID.GloryoftheFire, ItemID.GoblinsPlayingPoker, ItemID.GreatWave, ItemID.TheGuardiansGaze, ItemID.TheHangedMan,
                 ItemID.Impact, ItemID.ThePersistencyofEyes, ItemID.PoweredbyBirds, ItemID.TheScreamer, ItemID.SkellingtonJSkellingsworth, ItemID.SparkyPainting, ItemID.SomethingEvilisWatchingYou,
                 ItemID.StarryNight, ItemID.TrioSuperHeroes, ItemID.TheTwinsHaveAwoken, ItemID.UnicornCrossingtheHallows };
-            MakeTokenRecipes(dungeonPaintings, dungeonPaintings.Length, Rarity.CommonObject, 2, "Dungeon");
+            MakeSwapRecipes(dungeonPaintings, Rarity.CommonObject, 2, "Dungeon", true);
             int[] underworldPaintings = { ItemID.DarkSoulReaper, ItemID.Darkness, ItemID.DemonsEye, ItemID.FlowingMagma, ItemID.HandEarth, ItemID.ImpFace, ItemID.LakeofFire, ItemID.LivingGore,
                 ItemID.OminousPresence, ItemID.ShiningMoon, ItemID.Skelehead, ItemID.TrappedGhost };
-            MakeTokenRecipes(underworldPaintings, underworldPaintings.Length, Rarity.CommonObject, 2, "Underworld");
+            MakeSwapRecipes(underworldPaintings, Rarity.CommonObject, 2, "Underworld", true);
 
 
             /*
