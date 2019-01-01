@@ -40,7 +40,7 @@ namespace TokenMod.Items.Essence
         {
             item.width = 18;
             item.height = 18;
-            item.maxStack = 99999;
+            item.maxStack = 9999;
             item.value = 5;
             item.rare = 1;
         }

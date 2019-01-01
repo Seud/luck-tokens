@@ -12,8 +12,10 @@ Click "Visit the Mod's Homepage" below to access the mod's GitHub, where you can
 
 Quick changelog (See github commits for full changes)
 
-v1.2.1 - Further balancing and new icon
-Most furniture items have changed costs - some are cheaper, others are more expensive (More consistent with cost of drops)
+v1.3.0 - Swap and furniture balancing and new icon
+Swap recipes now use a fixed fraction of the original price instead of ignoring the rarity
+Most furniture items are more expensive but can now be swapped
+Large swap tables now make use of an intermediate "swap" token that can be redeemed for a cheap item (Unchanged final cost, this is only for performance reasons)
 Fixed inconsistent "set" drops that were often too cheap and sometimes too expensive
 
 v1.2.0.1 - Minor fix

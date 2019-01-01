@@ -33,6 +33,9 @@ namespace TokenMod
         // Global multiplier for costs
         public const double GLOBAL_COST_MULTIPLIER = 0.1;
 
+        // Cost multiplier for swaps
+        public const double SWAP_COST_MULTIPLIER = 0.1;
+
         // Base value multiplier of a boss (Compared to average enemy of tier)
         public const float BOSS_VALUE_MULT = 100f;
 
@@ -135,12 +138,12 @@ namespace TokenMod
         /*
         * Calculates base cost of an item
         */
-        public static int CalculateCost(double dropRate, Rarity rarity, int tier)
+        public static int CalculateCost(double dropRate, Rarity rarity, int tier, double costMult = 1.0)
         {
             // Calculate Rarity and Tier modifiers
-            double costMod = GetRareModifier(rarity) * GetValueMult(GetTierValue(tier), tier) * GLOBAL_COST_MULTIPLIER;
+            double costMod = GetRareModifier(rarity) * GetValueMult(GetTierValue(tier), tier) * GLOBAL_COST_MULTIPLIER * costMult;
 
-            return (int) Math.Round(Math.Max(0.1, dropRate) * costMod);
+            return (int) Math.Round(dropRate * costMod);
         }
 
         /*
