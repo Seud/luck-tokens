@@ -9,7 +9,7 @@ namespace TokenMod
         None,
         VeryCommon, Common, Uncommon, Rare, VeryRare, Boss,
         VeryCommonObject, CommonObject, UncommonObject, RareObject, VeryRareObject,
-        Chest, RareChest, Furniture, Dye,
+        Chest, RareChest, Dye,
         Fishing, FishingCrate, QuestReward,
         TravelingMerchant, Redeem
     };
@@ -82,7 +82,6 @@ namespace TokenMod
 
                 case Rarity.Chest:
                 case Rarity.Dye:
-                case Rarity.Furniture:
                 case Rarity.UncommonObject:
                 case Rarity.Rare: return RARITY_R;
 

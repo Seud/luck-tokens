@@ -8,9 +8,13 @@ Does that sound familiar ? If yes, you have been visited by the R.N.Goddess and 
 
 TokenMod is a mod that adds special crafting components to the game, dropping randomly within the world. These components allow you to craft (almost) all rare or hard-to-find items in the game from the comfort of your home.
 
-Click "More information" below to access my GitHub, where you can find my contact info !
+Click "Visit the Mod's Homepage" below to access the mod's GitHub, where you can find the source code and my contact info !
 
 Quick changelog (See github commits for full changes)
+
+v1.2.1 - Further balancing and new icon
+Most furniture items have changed costs - some are cheaper, others are more expensive (More consistent with cost of drops)
+Fixed inconsistent "set" drops that were often too cheap and sometimes too expensive
 
 v1.2.0.1 - Minor fix
 Fixed the Sniper scope being craftable instead of the Rifle scope
