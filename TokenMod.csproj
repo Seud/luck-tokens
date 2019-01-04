@@ -80,13 +80,6 @@
     <Compile Include="Items\Essence\Tier0Essence.cs" />
     <Compile Include="Items\Special\ChaoticEssence.cs" />
     <Compile Include="Items\Special\MeteorCharm.cs" />
-    <Compile Include="Items\Swap\DungeonDecorationSwapToken.cs" />
-    <Compile Include="Items\Swap\DungeonPaintingSwapToken.cs" />
-    <Compile Include="Items\Swap\UndergroundPaintingSwapToken.cs" />
-    <Compile Include="Items\Swap\UnderworldPaintingSwapToken.cs" />
-    <Compile Include="Items\Swap\UnderworldDecorationSwapToken.cs" />
-    <Compile Include="Items\Swap\StatueSwapToken.cs" />
-    <Compile Include="Items\Swap\StrangePlantSwapToken.cs" />
     <Compile Include="Items\Token\BaseToken.cs" />
     <Compile Include="Items\Token\BossToken.cs" />
     <Compile Include="Items\Token\CorruptionToken.cs" />
@@ -138,7 +131,6 @@
   <ItemGroup>
     <None Include="README.md" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"C:\Steam\steamapps\common\Terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>
