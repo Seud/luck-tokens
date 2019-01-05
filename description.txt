@@ -12,9 +12,13 @@ Click "Visit the Mod's Homepage" below to access the mod's GitHub, where you can
 
 Quick changelog (See github commits for full changes)
 
-v1.2.1 - Further balancing and new icon
+v1.3.0 - Further balancing and new icon
 Most furniture items have changed costs - some are cheaper, others are more expensive (More consistent with cost of drops)
 Fixed inconsistent "set" drops that were often too cheap and sometimes too expensive
+Strange plants can no longer be swapped but are cheaper and any can be used to redeem dyes now
+Boss items can now only be crafted or swapped if the corresponding boss (Or sometimes event) has been defeated in the current world
+All swappable items can now be crafted
+Minor fixes
 
 v1.2.0.1 - Minor fix
 Fixed the Sniper scope being craftable instead of the Rifle scope
@@ -22,7 +26,7 @@ Lowered the cost of post-plantera dungeon melee and ranged enemy drops
 
 v1.2.0 - Major changes to the drop/cost formula, bosses and fishing
 Value-to-essence formula completely changed, prices and drops are higher now
-Boss bags no longer drops tokens - bosses directly do now, using different values (Expert drops are instanced like bags - experimental)
+Boss bags no longer drops tokens - bosses directly do now, using different values (Expert drops are instanced like bags)
 Fishing now grants tokens directly instead of crates - rarer but coniderably more
 Fishing quests now grant tokens, scaling with quests completed
 Fixed Shadow chest items not being craftable (only swappable)

@@ -146,16 +146,14 @@ namespace TokenMod
 
         /*
          * Calculates an amount of dropped essence or tokens depending on value
-         * vic determines whether the value affects drop chance or drop quantity (Average is the same)
          */
-        public static int GetDropAmount(float value, int tier, bool vic, double dropMult)
+        public static int GetDropAmount(float value, int tier, bool ignore_droprate, double dropMult)
         {
-            double valueMult = TokenBalance.GetValueMult(value, tier) * dropMult;
+            // Check if we drop tokens
+            if (!ignore_droprate)
+                if (random.NextDouble() >= TokenBalance.DROP_BASE_RATE) return 0;
 
-            double tokenDropChance = TokenBalance.DROP_BASE_RATE * (vic ? valueMult : 1);
-            int mult = vic ? 1 : (int) Math.Ceiling(valueMult);
-
-            return GetTokenAmount(tokenDropChance) * mult;
+            return (int) Math.Ceiling(TokenBalance.GetValueMult(value, tier) * dropMult);
         }
 
         /*
@@ -166,9 +164,48 @@ namespace TokenMod
             if (!TokenBalance.BOSS_DICT.ContainsKey(npc.type)) return false;
 
             float bossValue = TokenBalance.BOSS_DICT[npc.type];
-            if (Main.expertMode) bossValue *= 2;
+            if (Main.expertMode) bossValue *= TokenBalance.BOSS_EXPERT_MULT;
             DropTokens(mod, null, bossValue, npc, true, 1, true, new List<int> { mod.ItemType<Items.Token.BossToken>() }, Main.expertMode);
             return true;
+        }
+
+        /*
+         * Check if a condition is respected for crafting items
+         */
+        public static bool GetRecipeCondition(string condition)
+        {
+            switch(condition)
+            {
+                // Pre-Hardmode
+                case "downedSlimeKing": return NPC.downedSlimeKing;
+                case "downedBoss1": return NPC.downedBoss1;
+                case "downedBoss2": return NPC.downedBoss2;
+                case "downedQueenBee": return NPC.downedQueenBee;
+                case "downedBoss3": return NPC.downedBoss3;
+
+                // Hardmode
+                case "hardMode": return Main.hardMode;
+                case "downedMechBoss1": return NPC.downedMechBoss1;
+                case "downedMechBoss2": return NPC.downedMechBoss2;
+                case "downedMechBoss3": return NPC.downedMechBoss3;
+                case "downedPlantBoss": return NPC.downedPlantBoss;
+                case "downedGolemBoss": return NPC.downedGolemBoss;
+                case "downedFishron": return NPC.downedFishron;
+                case "downedAncientCultist": return NPC.downedAncientCultist;
+                case "downedMoonlord": return NPC.downedMoonlord;
+
+                // Invasions and events
+                case "downedPirates": return NPC.downedPirates;
+                case "downedMartians": return NPC.downedMartians;
+                case "downedHalloweenTree": return NPC.downedHalloweenTree;
+                case "downedHalloweenKing": return NPC.downedHalloweenKing;
+                case "downedChristmasTree": return NPC.downedChristmasTree;
+                case "downedChristmasSantank": return NPC.downedChristmasSantank;
+                case "downedChristmasIceQueen": return NPC.downedChristmasIceQueen;
+                case "DownedInvasionAnyDifficulty": return Terraria.GameContent.Events.DD2Event.DownedInvasionAnyDifficulty;
+
+                default: return true;
+            }
         }
     }
 

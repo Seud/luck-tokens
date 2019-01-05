@@ -44,7 +44,7 @@ New items are sorted in three categories that are used for various purposes.
 Most sources of Tier Essence will give the same amount of the appropriate Location or Special token. This amount is determined by two things :
 
 - A base value, which is equal to the base coin value of enemies or a fixed value for other sources (e.g. Eternia Stone). Usually, the harder the enemy, the more Essence it can drop
-- A value "softcap" which rises with world tier and lowers amount of tokens granted by high-value enemies (Do note that higher value always equates more tokens, the scaling is just fractional instead)
+- A value "softcap" which rises with world tier and lowers amount of tokens granted by high-value enemies (Do note that higher value always equates more tokens, the scaling is just fractional instead of linear)
 
 The cost of an item is calculated by a simple formula that multiplies the item rarity (Calculated from the source rarity and likelihood to give the item) with the average amount of Essence that would be given out by a standard enemy of this tier.
 
@@ -54,9 +54,9 @@ In order to avoid cluttering the inventory while exploring, killing enemies only
 
 All recipes created by the mod are available at any anvil. Most recipes follow one of several schemas :
 
-* Items with Normal recipes are crafted using Tier tokens and up to two special or Location tokens. Most recipes follow this schema. Costs rise with item rarity and tier. Some items require additional components outlining special acquisition rules (For example, creating Dungeon items require a Golden Key)
+* Items with Normal recipes are crafted using Tier essence and up to two special or Location tokens. Most recipes follow this schema. Costs rise with item rarity and tier. Some items require additional components outlining special acquisition rules (For example, creating Dungeon items require a Golden Key)
 * Items with Swap recipes can additionally be crafted using another item of the same pool and a discounted price in Tokens and Location. This is mostly relevant for boss and chest/mimic items.
-* Items with Traveling Merchant recipes can be duplicated. Duplicating cheap objects (e.g. Dynasty Wood) requires a stack of the original size. Duplicating simulates buying more of an item and therefore only costs Traveling Merchant Tokens.
+* Items with Traveling Merchant recipes can additionally be duplicated. Duplicating cheap objects (e.g. Dynasty Wood) requires a stack of the original size. Duplicating simulates buying more of an item and therefore only costs Traveling Merchant Tokens.
 
 Currently, recipes include the following (As a general rule, craftable or purchasable items as well as consumables are excluded) :
 

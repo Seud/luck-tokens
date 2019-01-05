@@ -33,14 +33,11 @@ namespace TokenMod
         // Global multiplier for costs
         public const double GLOBAL_COST_MULTIPLIER = 0.1;
 
-        // Base value multiplier of a boss (Compared to average enemy of tier)
-        public const float BOSS_VALUE_MULT = 100f;
+        // Boss value multiplier for expert mode
+        public const float BOSS_EXPERT_MULT = 2f;
 
         // Base value of a fish
         public const float BASE_FISH_VALUE = 100f;
-
-        // Drop multiplier of a quest
-        public const int QUEST_MULTIPLIER = 50;
 
         // Value of an Eternia Token
         public const float ETERNIA_VALUE = 10000f;
@@ -58,7 +55,7 @@ namespace TokenMod
 
         public const double RARITY_FISH = 2;
         public const double RARITY_FISH_RARE = 20;
-        public const double RARITY_BOSS = 5;
+        public const double RARITY_BOSS = 10;
         public const double RARITY_TM = 6;
         public const double RARITY_REDEEM = 1;
 
@@ -148,7 +145,7 @@ namespace TokenMod
          */
         public static float GetBossValue(int tier, float mult)
         {
-            return mult * GetTierValue(tier) * BOSS_VALUE_MULT;
+            return mult * GetTierValue(tier);
         }
 
         /*
@@ -158,7 +155,6 @@ namespace TokenMod
         {
             Dictionary<int, float> dict = new Dictionary<int, float>
             {
-
                 // Pre-Hardmode
                 { NPCID.KingSlime, GetBossValue(1, 0.4f) },
                 { NPCID.EyeofCthulhu, GetBossValue(1, 1f) },

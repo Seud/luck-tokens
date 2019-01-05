@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,9 +11,12 @@ namespace TokenMod
         private Mod mod;
 
         private int bonusItemID = -1;
+        private string bonusItemGroup = "";
         private int bonusItemAmount = 1;
         private int swapItemID = -1;
         private int resultAmount = 1;
+
+        private string condition = "";
 
         public TokenRecipes(Mod mod)
         {
@@ -27,7 +30,7 @@ namespace TokenMod
         public void MakeRawTokenRecipe(int result, int tier, int cost, string token1 = "", string token2 = "")
         {
             // Add a recipe using up to 4 different token types and a bonus item
-            ModRecipe recipe = new ModRecipe(mod);
+            ModRecipe recipe = new TokenRecipe(mod, condition);
 
             recipe.AddTile(TOKEN_CRAFTING_STATION);
 
@@ -39,6 +42,7 @@ namespace TokenMod
                 if (!string.IsNullOrEmpty(token2)) recipe.AddIngredient(mod, token2 + "Token", cost);
             }
             if (bonusItemID > 0) recipe.AddIngredient(bonusItemID, bonusItemAmount);
+            if (!string.IsNullOrEmpty(bonusItemGroup)) recipe.AddRecipeGroup(bonusItemGroup, bonusItemAmount);
 
             recipe.SetResult(result, resultAmount);
             recipe.AddRecipe();
@@ -82,7 +86,7 @@ namespace TokenMod
          * Makes recipes for swapping items within a set at a cost
          * Can also deduce a recipe
          */
-        public void MakeSwapRecipes(int[] swaps, Rarity rarity, int tier, string swapCost = "", bool addRecipe = false, double dropRate = 1)
+        public void MakeSwapRecipes(int[] swaps, Rarity rarity, int tier, string swapCost = "", double dropRate = 1)
         {
             for (int i = 0; i < swaps.Length; i++)
             {
@@ -95,7 +99,7 @@ namespace TokenMod
                 }
 
                 bonusItemID = oldID;
-                if (addRecipe) MakeTokenRecipe(swaps[i], swaps.Length * dropRate, rarity, tier, swapCost);
+                MakeTokenRecipe(swaps[i], swaps.Length * dropRate, rarity, tier, swapCost);
             }
         }
 
@@ -203,7 +207,7 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.PocketMirror, 100, Rarity.Uncommon, 3, "Underground");
             MakeTokenRecipe(ItemID.PoisonStaff, 40, Rarity.Uncommon, 3, "Underground");
             int[] mimicSwaps = { ItemID.DualHook, ItemID.MagicDagger, ItemID.TitanGlove, ItemID.PhilosophersStone, ItemID.CrossNecklace, ItemID.StarCloak };
-            MakeSwapRecipes(mimicSwaps, Rarity.Rare, 3, "Underground", true);
+            MakeSwapRecipes(mimicSwaps, Rarity.Rare, 3, "Underground");
             MakeTokenRecipe(ItemID.RuneHat, 1, Rarity.VeryRare, 3, "Underground");
             MakeTokenRecipe(ItemID.RuneRobe, 1, Rarity.VeryRare, 3, "Underground");
 
@@ -281,7 +285,7 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.FrozenTurtleShell, 200, Rarity.Uncommon, 3, "UndergroundSnow");
 
             int[] iceMimicSwaps = { ItemID.Frostbrand, ItemID.IceBow, ItemID.FlowerofFrost };
-            MakeSwapRecipes(iceMimicSwaps, Rarity.Rare, 3, "UndergroundSnow", true);
+            MakeSwapRecipes(iceMimicSwaps, Rarity.Rare, 3, "UndergroundSnow");
             MakeTokenRecipe(ItemID.ToySled, 20, Rarity.Rare, 3, "UndergroundSnow");
             
 
@@ -297,14 +301,14 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.Vitamins, 100, Rarity.Common, 3, "UndergroundCorruption");
 
             int[] corruptionMimicSwaps = { ItemID.DartRifle, ItemID.WormHook, ItemID.ChainGuillotines, ItemID.ClingerStaff, ItemID.PutridScent };
-            MakeSwapRecipes(corruptionMimicSwaps, Rarity.VeryRare, 3, "UndergroundCorruption", true);
+            MakeSwapRecipes(corruptionMimicSwaps, Rarity.VeryRare, 3, "UndergroundCorruption");
             MakeTokenRecipe(ItemID.Nazar, 100, Rarity.Uncommon, 3, "UndergroundCorruption");
 
             // Crimson mobs
             MakeTokenRecipe(ItemID.MeatGrinder, 200, Rarity.VeryCommon, 1, "Crimson");
 
             int[] crimsonMimicSwaps = { ItemID.SoulDrain, ItemID.DartPistol, ItemID.FetidBaghnakhs, ItemID.FleshKnuckles, ItemID.TendonHook };
-            MakeSwapRecipes(crimsonMimicSwaps, Rarity.VeryRare, 3, "UndergroundCrimson", true);
+            MakeSwapRecipes(crimsonMimicSwaps, Rarity.VeryRare, 3, "UndergroundCrimson");
             MakeTokenRecipe(ItemID.MeatGrinder, 200, Rarity.VeryCommon, 3, "UndergroundCrimson");
             MakeTokenRecipe(ItemID.Vitamins, 100, Rarity.Common, 3, "UndergroundCrimson");
             MakeTokenRecipe(ItemID.Nazar, 100, Rarity.Uncommon, 3, "UndergroundCrimson");
@@ -321,7 +325,7 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.BlessedApple, 200, Rarity.VeryCommon, 3, "UndergroundHallow");
             MakeTokenRecipe(ItemID.RodofDiscord, 500, Rarity.Common, 3, "UndergroundHallow");
             int[] hallowMimicSwaps = { ItemID.DaedalusStormbow, ItemID.FlyingKnife, ItemID.CrystalVileShard, ItemID.IlluminantHook };
-            MakeSwapRecipes(hallowMimicSwaps, Rarity.VeryRare, 3, "UndergroundHallow", true);
+            MakeSwapRecipes(hallowMimicSwaps, Rarity.VeryRare, 3, "UndergroundHallow");
             MakeTokenRecipe(ItemID.Nazar, 100, Rarity.Uncommon, 3, "UndergroundHallow");
 
             // Dungeon mobs
@@ -399,7 +403,7 @@ namespace TokenMod
             // Goblin Invasion
             MakeTokenRecipe(ItemID.Harpoon, 200, Rarity.VeryCommon, 1, "Invasion");
             int[] summonerSwaps = { ItemID.ShadowFlameHexDoll, ItemID.ShadowFlameBow, ItemID.ShadowFlameKnife };
-            MakeSwapRecipes(summonerSwaps, Rarity.Rare, 3, "Invasion", true, 2);
+            MakeSwapRecipes(summonerSwaps, Rarity.Rare, 3, "Invasion", 2);
 
             // Solar Eclipse
             MakeTokenRecipe(ItemID.NeptunesShell, 50, Rarity.Common, 4, "Invasion");
@@ -464,6 +468,8 @@ namespace TokenMod
             /*
              * Normal Boss items
              */
+            
+            condition = "downedSlimeKing";
 
             // King Slime
             int[] kingSlimeSwaps1 = { ItemID.NinjaHood, ItemID.NinjaShirt, ItemID.NinjaPants };
@@ -474,10 +480,14 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.KingSlimeMask, 7, Rarity.Boss, 1, "Boss");
             MakeTokenRecipe(ItemID.KingSlimeTrophy, 10, Rarity.Boss, 1, "Boss");
 
+            condition = "downedBoss1";
+
             // Eye of Cthulhu
             MakeTokenRecipe(ItemID.Binoculars, 40, Rarity.Boss, 1, "Boss");
             MakeTokenRecipe(ItemID.EyeMask, 7, Rarity.Boss, 1, "Boss");
             MakeTokenRecipe(ItemID.EyeofCthulhuTrophy, 10, Rarity.Boss, 1, "Boss");
+
+            condition = "downedBoss2";
 
             // Eater of Worlds
             MakeTokenRecipe(ItemID.EatersBone, 20, Rarity.Boss, 2, "Boss");
@@ -488,6 +498,8 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.BoneRattle, 20, Rarity.Boss, 2, "Boss");
             MakeTokenRecipe(ItemID.BrainMask, 7, Rarity.Boss, 2, "Boss");
             MakeTokenRecipe(ItemID.BrainofCthulhuTrophy, 10, Rarity.Boss, 2, "Boss");
+
+            condition = "downedQueenBee";
 
             // Queen Bee
             int[] queenBeeSwaps1 = { ItemID.BeeGun, ItemID.BeeKeeper, ItemID.BeesKnees };
@@ -500,11 +512,15 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.BeeMask, 7, Rarity.Boss, 4, "Boss");
             MakeTokenRecipe(ItemID.QueenBeeTrophy, 10, Rarity.Boss, 2, "Boss");
 
+            condition = "downedBoss3";
+
             // Skeletron
             MakeTokenRecipe(ItemID.SkeletronHand, 8, Rarity.Boss, 2, "Boss");
             MakeTokenRecipe(ItemID.BookofSkulls, 10, Rarity.Boss, 2, "Boss");
             MakeTokenRecipe(ItemID.SkeletronMask, 7, Rarity.Boss, 2, "Boss");
             MakeTokenRecipe(ItemID.SkeletronTrophy, 10, Rarity.Boss, 2, "Boss");
+
+            condition = "hardMode";
 
             // Wall of Flesh
             int[] wallOfFleshSwaps = { ItemID.BreakerBlade, ItemID.ClockworkAssaultRifle, ItemID.LaserRifle, ItemID.WarriorEmblem, ItemID.SorcererEmblem, ItemID.RangerEmblem, ItemID.SummonerEmblem };
@@ -512,14 +528,24 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.FleshMask, 7, Rarity.Boss, 3, "Boss");
             MakeTokenRecipe(ItemID.WallofFleshTrophy, 10, Rarity.Boss, 3, "Boss");
 
+            condition = "downedMechBoss2";
+
             // Mechanical bosses
             MakeTokenRecipe(ItemID.TwinMask, 7, Rarity.Boss, 4, "Boss");
             MakeTokenRecipe(ItemID.RetinazerTrophy, 10, Rarity.Boss, 4, "Boss");
             MakeTokenRecipe(ItemID.SpazmatismTrophy, 10, Rarity.Boss, 4, "Boss");
+
+            condition = "downedMechBoss1";
+
             MakeTokenRecipe(ItemID.DestroyerMask, 7, Rarity.Boss, 4, "Boss");
             MakeTokenRecipe(ItemID.DestroyerTrophy, 10, Rarity.Boss, 4, "Boss");
+
+            condition = "downedMechBoss3";
+
             MakeTokenRecipe(ItemID.SkeletronPrimeMask, 7, Rarity.Boss, 4, "Boss");
             MakeTokenRecipe(ItemID.SkeletronPrimeTrophy, 10, Rarity.Boss, 4, "Boss");
+
+            condition = "downedPlantBoss";
 
             // Plantera
             int[] planteraSwaps = { ItemID.GrenadeLauncher, ItemID.VenusMagnum, ItemID.NettleBurst, ItemID.LeafBlower, ItemID.FlowerPow, ItemID.WaspGun, ItemID.Seedler };
@@ -530,11 +556,15 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.PlanteraMask, 7, Rarity.Boss, 5, "Boss");
             MakeTokenRecipe(ItemID.PlanteraTrophy, 10, Rarity.Boss, 5, "Boss");
 
+            condition = "downedGolemBoss";
+
             // Golem
             int[] golemSwaps = { ItemID.Stynger, ItemID.PossessedHatchet, ItemID.SunStone, ItemID.EyeoftheGolem, ItemID.Picksaw, ItemID.HeatRay, ItemID.StaffofEarth, ItemID.GolemFist };
             MakeSwapRecipes(golemSwaps, Rarity.Boss, 6, "Boss");
             MakeTokenRecipe(ItemID.GolemMask, 7, Rarity.Boss, 6, "Boss");
             MakeTokenRecipe(ItemID.GolemTrophy, 10, Rarity.Boss, 6, "Boss");
+
+            condition = "downedFishron";
 
             // Duke Fishron
             int[] dukeFishronSwaps = { ItemID.BubbleGun, ItemID.Flairon, ItemID.RazorbladeTyphoon, ItemID.TempestStaff, ItemID.Tsunami };
@@ -543,20 +573,26 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.DukeFishronMask, 7, Rarity.Boss, 6, "Boss");
             MakeTokenRecipe(ItemID.DukeFishronTrophy, 10, Rarity.Boss, 6, "Boss");
 
+            condition = "downedAncientCultist";
+
             // Lunatic Cultist
             MakeTokenRecipe(ItemID.BossMaskCultist, 7, Rarity.Boss, 6, "Boss");
             MakeTokenRecipe(ItemID.AncientCultistTrophy, 10, Rarity.Boss, 6, "Boss");
+
+            condition = "downedMoonlord";
 
             // Moon Lord
             int[] moonLordSwaps = { ItemID.Meowmere, ItemID.Terrarian, ItemID.StarWrath, ItemID.SDMG, ItemID.FireworksLauncher, ItemID.LastPrism, ItemID.LunarFlareBook, ItemID.RainbowCrystalStaff,
             ItemID.MoonlordTurretStaff};
             MakeSwapRecipes(moonLordSwaps, Rarity.Boss, 7, "Boss");
-            MakeTokenRecipe(ItemID.MoonMask, 7, Rarity.Boss, 2, "Boss");
-            MakeTokenRecipe(ItemID.MoonLordTrophy, 10, Rarity.Boss, 2, "Boss");
+            MakeTokenRecipe(ItemID.MoonMask, 7, Rarity.Boss, 7, "Boss");
+            MakeTokenRecipe(ItemID.MoonLordTrophy, 10, Rarity.Boss, 7, "Boss");
 
             /*
              * Invasion Boss items
              */
+
+            condition = "downedPirates";
 
             // Flying Dutchman
             MakeTokenRecipe(ItemID.Cutlass, 10, Rarity.Boss, 3, "Boss");
@@ -567,39 +603,53 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.CoinGun, 400, Rarity.Boss, 3, "Boss");
             MakeTokenRecipe(ItemID.FlyingDutchmanTrophy, 10, Rarity.Boss, 3, "Boss");
 
+            condition = "downedHalloweenTree";
+
             // Mourning Wood
             int[] mourningWoodSwaps = { ItemID.CursedSapling, ItemID.SpookyTwig, ItemID.SpookyHook, ItemID.NecromanticScroll, ItemID.StakeLauncher };
-            MakeSwapRecipes(mourningWoodSwaps, Rarity.Boss, 5, "Boss", true, 2);
+            MakeSwapRecipes(mourningWoodSwaps, Rarity.Boss, 5, "Boss", 2);
             MakeTokenRecipe(ItemID.MourningWoodTrophy, 10, Rarity.Boss, 5, "Boss");
+
+            condition = "downedHalloweenKing";
 
             // Pumpking
             int[] pumpkingSwaps = { ItemID.TheHorsemansBlade, ItemID.BatScepter, ItemID.BlackFairyDust, ItemID.SpiderEgg, ItemID.RavenStaff, ItemID.CandyCornRifle, ItemID.JackOLanternLauncher };
-            MakeSwapRecipes(pumpkingSwaps, Rarity.Boss, 5, "Boss", true, 2);
+            MakeSwapRecipes(pumpkingSwaps, Rarity.Boss, 5, "Boss", 2);
             MakeTokenRecipe(ItemID.PumpkingTrophy, 10, Rarity.Boss, 5, "Boss");
+
+            condition = "downedChristmasTree";
 
             // Everscream
             int[] everscreamSwaps = { ItemID.ChristmasTreeSword, ItemID.ChristmasHook, ItemID.Razorpine };
-            MakeSwapRecipes(everscreamSwaps, Rarity.Boss, 5, "Boss", true, 8);
+            MakeSwapRecipes(everscreamSwaps, Rarity.Boss, 5, "Boss", 8);
             MakeTokenRecipe(ItemID.FestiveWings, 120, Rarity.Boss, 5, "Boss");
             MakeTokenRecipe(ItemID.EverscreamTrophy, 10, Rarity.Boss, 5, "Boss");
 
+            condition = "downedChristmasSantank";
+
             // Santa NK-1
             int[] santaNK1Swaps = { ItemID.EldMelter, ItemID.ChainGun };
-            MakeSwapRecipes(santaNK1Swaps, Rarity.Boss, 5, "Boss", true, 8);
+            MakeSwapRecipes(santaNK1Swaps, Rarity.Boss, 5, "Boss", 8);
             MakeTokenRecipe(ItemID.SantaNK1Trophy, 10, Rarity.Boss, 5, "Boss");
+
+            condition = "downedChristmasIceQueen";
 
             // Ice Queen
             int[] iceQueenSwaps = { ItemID.SnowmanCannon, ItemID.NorthPole, ItemID.BlizzardStaff };
-            MakeSwapRecipes(iceQueenSwaps, Rarity.Boss, 5, "Boss", true, 8);
+            MakeSwapRecipes(iceQueenSwaps, Rarity.Boss, 5, "Boss", 8);
             MakeTokenRecipe(ItemID.BabyGrinchMischiefWhistle, 120, Rarity.Boss, 5, "Boss");
             MakeTokenRecipe(ItemID.ReindeerBells, 240, Rarity.Boss, 5, "Boss");
             MakeTokenRecipe(ItemID.IceQueenTrophy, 10, Rarity.Boss, 5, "Boss");
 
+            condition = "downedMartians";
+
             // Martian Saucer
             int[] saucerSwaps = { ItemID.Xenopopper, ItemID.XenoStaff, ItemID.LaserMachinegun, ItemID.LaserDrill, ItemID.ElectrosphereLauncher, ItemID.ChargedBlasterCannon, ItemID.InfluxWaver,
                 ItemID.CosmicCarKey, ItemID.AntiGravityHook };
-            MakeSwapRecipes(saucerSwaps, Rarity.Boss, 6, "Boss", true);
+            MakeSwapRecipes(saucerSwaps, Rarity.Boss, 6, "Boss");
             MakeTokenRecipe(ItemID.MartianSaucerTrophy, 10, Rarity.Boss, 6, "Boss");
+
+            condition = "DownedInvasionAnyDifficulty";
 
             // Dark Mage
             MakeTokenRecipe(ItemID.WarTable, 10, Rarity.Boss, 2, "Boss");
@@ -614,18 +664,20 @@ namespace TokenMod
             // Ogre
             int[] ogreSwaps1 = { ItemID.ApprenticeScarf, ItemID.SquireShield, ItemID.HuntressBuckler, ItemID.MonkBelt };
             int[] ogreSwaps2 = { ItemID.DD2PhoenixBow, ItemID.DD2SquireDemonSword, ItemID.MonkStaffT1, ItemID.MonkStaffT2, ItemID.BookStaff };
-            MakeSwapRecipes(ogreSwaps1, Rarity.Boss, 4, "Boss", true, 3);
-            MakeSwapRecipes(ogreSwaps2, Rarity.Boss, 4, "Boss", true, 3);
+            MakeSwapRecipes(ogreSwaps1, Rarity.Boss, 4, "Boss", 3);
+            MakeSwapRecipes(ogreSwaps2, Rarity.Boss, 4, "Boss", 3);
             MakeTokenRecipe(ItemID.DD2PetGhost, 5, Rarity.Boss, 4, "Boss");
             MakeTokenRecipe(ItemID.BossMaskOgre, 7, Rarity.Boss, 4, "Boss");
             MakeTokenRecipe(ItemID.BossTrophyOgre, 10, Rarity.Boss, 4, "Boss");
 
             // Betsy
             int[] betsySwaps = { ItemID.DD2SquireBetsySword, ItemID.ApprenticeStaffT3, ItemID.MonkStaffT3, ItemID.DD2BetsyBow };
-            MakeSwapRecipes(betsySwaps, Rarity.Boss, 6, "Boss", true);
+            MakeSwapRecipes(betsySwaps, Rarity.Boss, 6, "Boss");
             MakeTokenRecipe(ItemID.BetsyWings, 4, Rarity.Boss, 6, "Boss");
             MakeTokenRecipe(ItemID.BossMaskBetsy, 7, Rarity.Boss, 6, "Boss");
             MakeTokenRecipe(ItemID.BossTrophyBetsy, 10, Rarity.Boss, 6, "Boss");
+
+            condition = "";
 
             /*
              * NPC drops
@@ -649,11 +701,11 @@ namespace TokenMod
 
             // Surface Chests
             int[] surfaceChest = { ItemID.Spear, ItemID.WoodenBoomerang, ItemID.Blowpipe, ItemID.Aglet, ItemID.ClimbingClaws, ItemID.Umbrella, ItemID.Radar, ItemID.CordageGuide, ItemID.WandofSparking };
-            MakeSwapRecipes(surfaceChest, Rarity.Chest, 0, "Forest", true);
+            MakeSwapRecipes(surfaceChest, Rarity.Chest, 0, "Forest");
 
             // Underground Chests
             int[] goldenChest = { ItemID.BandofRegeneration, ItemID.MagicMirror, ItemID.CloudinaBottle, ItemID.HermesBoots, ItemID.EnchantedBoomerang, ItemID.ShoeSpikes, ItemID.FlareGun };
-            MakeSwapRecipes(goldenChest, Rarity.Chest, 1, "Underground", true);
+            MakeSwapRecipes(goldenChest, Rarity.Chest, 1, "Underground");
             MakeTokenRecipe(ItemID.Extractinator, 20, Rarity.Chest, 1, "Underground");
             MakeTokenRecipe(ItemID.LavaCharm, 40, Rarity.Chest, 1, "Underground");
             MakeTokenRecipe(ItemID.AngelStatue, 5, Rarity.Chest, 1, "Underground");
@@ -661,13 +713,13 @@ namespace TokenMod
             // Dungeon Chests
             int[] dungeonChest = { ItemID.MagicMissile, ItemID.Muramasa, ItemID.CobaltShield, ItemID.AquaScepter, ItemID.BlueMoon, ItemID.Handgun, ItemID.ShadowKey, ItemID.Valor };
             bonusItemID = ItemID.GoldenKey;
-            MakeSwapRecipes(dungeonChest, Rarity.Chest, 2, "Dungeon", true);
+            MakeSwapRecipes(dungeonChest, Rarity.Chest, 2, "Dungeon");
             bonusItemID = -1;
             MakeTokenRecipe(ItemID.BoneWelder, 1, Rarity.Chest, 2, "Dungeon");
 
             // Jungle Chests
             int[] jungleChest = { ItemID.AnkletoftheWind, ItemID.FeralClaws, ItemID.StaffofRegrowth, ItemID.Boomstick };
-            MakeSwapRecipes(jungleChest, Rarity.Chest, 2, "UndergroundJungle", true);
+            MakeSwapRecipes(jungleChest, Rarity.Chest, 2, "UndergroundJungle");
             MakeTokenRecipe(ItemID.LivingMahoganyLeafWand, 6, Rarity.Chest, 2, "UndergroundJungle");
             MakeTokenRecipe(ItemID.LivingMahoganyWand, 6, Rarity.Chest, 2, "UndergroundJungle");
             MakeTokenRecipe(ItemID.HoneyDispenser, 4, Rarity.Chest, 2, "UndergroundJungle");
@@ -680,32 +732,32 @@ namespace TokenMod
             MakeTokenRecipe(mod.ItemType<Items.Special.ShadowLockedToken>(), 2, Rarity.None, 0, "");
             int[] shadowChest = { ItemID.DarkLance, ItemID.Flamelash, ItemID.FlowerofFire, ItemID.Sunfury, ItemID.HellwingBow };
             bonusItemID = mod.ItemType<Items.Token.ShadowToken>();
-            MakeSwapRecipes(shadowChest, Rarity.Chest, 0, "Underworld", true);
+            MakeSwapRecipes(shadowChest, Rarity.Chest, 0, "Underworld");
             bonusItemID = -1;
 
             // Ocean Chests
             int[] oceanChest = { ItemID.Trident, ItemID.BreathingReed, ItemID.Flipper };
-            MakeSwapRecipes(oceanChest, Rarity.Chest, 1, "Ocean", true);
+            MakeSwapRecipes(oceanChest, Rarity.Chest, 1, "Ocean");
             MakeTokenRecipe(ItemID.WaterWalkingBoots, 15, Rarity.Uncommon, 1, "Ocean");
 
             // Sky Chests
             int[] skyChest = { ItemID.ShinyRedBalloon, ItemID.Starfury, ItemID.LuckyHorseshoe, ItemID.SkyMill };
-            MakeSwapRecipes(skyChest, Rarity.RareChest, 1, "Space", true);
+            MakeSwapRecipes(skyChest, Rarity.RareChest, 1, "Space");
 
             // Ice chests
             int[] iceChest = { ItemID.IceBoomerang, ItemID.IceBlade, ItemID.IceSkates, ItemID.SnowballCannon, ItemID.BlizzardinaBottle, ItemID.FlurryBoots };
-            MakeSwapRecipes(iceChest, Rarity.Chest, 1, "UndergroundSnow", true);
+            MakeSwapRecipes(iceChest, Rarity.Chest, 1, "UndergroundSnow");
             MakeTokenRecipe(ItemID.IceMirror, 5, Rarity.Chest, 1, "UndergroundSnow");
             MakeTokenRecipe(ItemID.IceMachine, 5, Rarity.Chest, 1, "UndergroundSnow");
             MakeTokenRecipe(ItemID.Fish, 25, Rarity.Chest, 1, "UndergroundSnow");
 
             // Living Wood Chest
             int[] livingWoodChest = { ItemID.LivingWoodWand, ItemID.LeafWand, ItemID.LivingLoom };
-            MakeSwapRecipes(livingWoodChest, Rarity.RareChest, 0, "Forest", true);
+            MakeSwapRecipes(livingWoodChest, Rarity.RareChest, 0, "Forest");
 
             // Pyramid Chest
             int[] pyramidChest = { ItemID.SandstorminaBottle, ItemID.PharaohsMask, ItemID.PharaohsRobe, ItemID.FlyingCarpet };
-            MakeSwapRecipes(pyramidChest, Rarity.RareChest, 1, "Desert", true);
+            MakeSwapRecipes(pyramidChest, Rarity.RareChest, 1, "Desert");
 
             // Other chests
             MakeTokenRecipe(ItemID.WebSlinger, 1, Rarity.RareChest, 1, "Underground");
@@ -743,10 +795,10 @@ namespace TokenMod
 
             // Orbs & hearts
             int[] shadowOrb = { ItemID.Musket, ItemID.ShadowOrb, ItemID.Vilethorn, ItemID.BallOHurt, ItemID.BandofStarpower };
-            MakeSwapRecipes(shadowOrb, Rarity.UncommonObject, 1, "Corruption", true);
+            MakeSwapRecipes(shadowOrb, Rarity.UncommonObject, 1, "Corruption");
 
             int[] crimsonHeart = { ItemID.TheUndertaker, ItemID.CrimsonHeart, ItemID.PanicNecklace, ItemID.CrimsonRod, ItemID.TheRottedFork };
-            MakeSwapRecipes(crimsonHeart, Rarity.UncommonObject, 1, "Crimson", true);
+            MakeSwapRecipes(crimsonHeart, Rarity.UncommonObject, 1, "Crimson");
 
             // Extractinator
             MakeTokenRecipe(ItemID.AmberMosquito, 5000 / 50, Rarity.VeryCommonObject, 1, "UndergroundDesert");
@@ -781,9 +833,9 @@ namespace TokenMod
 
             // Strange dyes
             int[] strangePlants = { ItemID.StrangePlant1, ItemID.StrangePlant2, ItemID.StrangePlant3, ItemID.StrangePlant4};
-            MakeSwapRecipes(strangePlants, Rarity.RareObject, 1, "", true);
+            MakeTokenRecipes(strangePlants, 1, Rarity.RareObject, 1);
 
-            bonusItemID = ItemID.StrangePlant1;
+            bonusItemGroup = "AnyStrangePlant";
             resultAmount = 3;
             int[] prehmDyes = { ItemID.AcidDye, ItemID.BlueAcidDye, ItemID.RedAcidDye, ItemID.MushroomDye, ItemID.MirageDye, ItemID.NegativeDye, ItemID.PurpleOozeDye, ItemID.ReflectiveDye,
                 ItemID.ReflectiveCopperDye, ItemID.ReflectiveGoldDye, ItemID.ReflectiveObsidianDye, ItemID.ReflectiveMetalDye, ItemID.ReflectiveSilverDye, ItemID.ShadowDye};
@@ -798,7 +850,7 @@ namespace TokenMod
             MakeTokenRecipe(ItemID.MidnightRainbowDye, prehmDyes.Length + hmDyes.Length + mbDyes.Length + planteraDyes.Length + 2, Rarity.Redeem, 6);
             MakeTokenRecipe(ItemID.DevDye, prehmDyes.Length + hmDyes.Length + mbDyes.Length + planteraDyes.Length + 3, Rarity.Redeem, 7);
             resultAmount = 1;
-            bonusItemID = -1;
+            bonusItemGroup = "";
 
             /*
              * Critters
@@ -863,10 +915,10 @@ namespace TokenMod
             int[] spaceBanners = { ItemID.WorldBanner, ItemID.SunBanner, ItemID.GravityBanner };
             int[] underworldBanners = { ItemID.HellboundBanner, ItemID.LostHopesofManBanner, ItemID.HellHammerBanner, ItemID.ObsidianWatcherBanner, ItemID.HelltowerBanner, ItemID.LavaEruptsBanner };
             int[] pyramidBanners = { ItemID.AnkhBanner, ItemID.SnakeBanner, ItemID.OmegaBanner };
-            MakeTokenRecipes(dungeonBanners, dungeonBanners.Length, Rarity.CommonObject, 2, "Dungeon");
-            MakeTokenRecipes(spaceBanners, spaceBanners.Length, Rarity.UncommonObject, 1, "Space");
-            MakeTokenRecipes(underworldBanners, underworldBanners.Length, Rarity.CommonObject, 2, "Underworld");
-            MakeTokenRecipes(pyramidBanners, pyramidBanners.Length, Rarity.RareObject, 1, "Desert");
+            MakeTokenRecipes(dungeonBanners, 1, Rarity.CommonObject, 2, "Dungeon");
+            MakeTokenRecipes(spaceBanners, 1, Rarity.UncommonObject, 1, "Space");
+            MakeTokenRecipes(underworldBanners, 1, Rarity.CommonObject, 2, "Underworld");
+            MakeTokenRecipes(pyramidBanners, 1, Rarity.RareObject, 1, "Desert");
 
             // Uncraftable chests
             MakeTokenRecipe(ItemID.GoldChest, 1, Rarity.Chest, 1, "Underground");
@@ -896,32 +948,20 @@ namespace TokenMod
             int[] pinkDungeonDecorations = { ItemID.PinkDungeonBathtub, ItemID.PinkDungeonBed, ItemID.PinkDungeonBookcase, ItemID.PinkDungeonCandelabra, ItemID.PinkDungeonCandle,
                 ItemID.PinkDungeonChair, ItemID.PinkDungeonChandelier, ItemID.PinkDungeonDoor, ItemID.PinkDungeonDresser, ItemID.PinkDungeonLamp, ItemID.PinkDungeonPiano, ItemID.PinkDungeonSofa,
                 ItemID.PinkDungeonTable, ItemID.PinkDungeonVase, ItemID.PinkDungeonWorkBench };
-            int totalDecorations = dungeonDecorations.Length + blueDungeonDecorations.Length;
-            MakeTokenRecipes(dungeonDecorations, totalDecorations, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.BlueBrick;
-            MakeTokenRecipes(blueDungeonDecorations, totalDecorations, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.GreenBrick;
-            MakeTokenRecipes(greenDungeonDecorations, totalDecorations, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.PinkBrick;
-            MakeTokenRecipes(pinkDungeonDecorations, totalDecorations, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = -1;
+            MakeTokenRecipes(dungeonDecorations, 1, Rarity.CommonObject, 2, "Dungeon");
+            MakeTokenRecipes(blueDungeonDecorations, 1, Rarity.CommonObject, 2, "Dungeon");
+            MakeTokenRecipes(greenDungeonDecorations, 1, Rarity.CommonObject, 2, "Dungeon");
+            MakeTokenRecipes(pinkDungeonDecorations, 1, Rarity.CommonObject, 2, "Dungeon");
 
             resultAmount = 50;
-            int[] dungeonPlatforms = { ItemID.DungeonShelf, ItemID.WoodShelf, ItemID.MetalShelf, ItemID.BrassShelf, ItemID.Book };
-            MakeTokenRecipes(dungeonPlatforms, dungeonPlatforms.Length + 1, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.BlueBrick;
-            MakeTokenRecipe(ItemID.BlueBrickPlatform, dungeonPlatforms.Length + 1, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.GreenBrick;
-            MakeTokenRecipe(ItemID.GreenBrickPlatform, dungeonPlatforms.Length + 1, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = ItemID.PinkBrick;
-            MakeTokenRecipe(ItemID.PinkBrickPlatform, dungeonPlatforms.Length + 1, Rarity.VeryCommonObject, 2, "Dungeon");
-            bonusItemID = -1;
+            int[] dungeonPlatforms = { ItemID.DungeonShelf, ItemID.WoodShelf, ItemID.MetalShelf, ItemID.BrassShelf, ItemID.Book, ItemID.BlueBrickPlatform, ItemID.GreenBrickPlatform, ItemID.PinkBrickPlatform };
+            MakeTokenRecipes(dungeonPlatforms, 1, Rarity.CommonObject, 2, "Dungeon");
             resultAmount = 1;
 
             int[] underworldDecorations = { ItemID.ObsidianBathtub, ItemID.ObsidianBed, ItemID.ObsidianBookcase, ItemID.ObsidianCandelabra, ItemID.ObsidianCandle, ItemID.ObsidianChair,
                 ItemID.ObsidianChandelier, ItemID.ObsidianDoor, ItemID.ObsidianDresser, ItemID.ObsidianLamp, ItemID.ObsidianPiano, ItemID.ObsidianSofa, ItemID.ObsidianTable, ItemID.ObsidianVase,
                 ItemID.ObsidianWorkBench };
-            MakeTokenRecipes(underworldDecorations, underworldDecorations.Length, Rarity.CommonObject, 2, "Underworld");
+            MakeTokenRecipes(underworldDecorations, 1, Rarity.CommonObject, 2, "Underworld");
 
             /*
              * Statues
@@ -937,10 +977,9 @@ namespace TokenMod
                 ItemID.HammerStatue, ItemID.HornetStatue, ItemID.ImpStatue, ItemID.PickaxeStatue, ItemID.PillarStatue, ItemID.PotStatue, ItemID.PotionStatue,
                 ItemID.ReaperStatue, ItemID.ShieldStatue, ItemID.SpearStatue, ItemID.SunflowerStatue, ItemID.SwordStatue, ItemID.TreeStatue, ItemID.WomanStatue,
                 ItemID.LihzahrdStatue, ItemID.LihzahrdGuardianStatue, ItemID.LihzahrdWatcherStatue };
-            int totalStatues = mobStatues.Length + functionalStatues.Length + decorationStatues.Length;
-            MakeTokenRecipes(mobStatues, totalStatues, Rarity.CommonObject, 1, "Underground");
-            MakeTokenRecipes(functionalStatues, totalStatues, Rarity.CommonObject, 1, "Underground");
-            MakeTokenRecipes(decorationStatues, totalStatues, Rarity.CommonObject, 1, "Underground");
+            MakeTokenRecipes(mobStatues, 1, Rarity.UncommonObject, 1, "Underground");
+            MakeTokenRecipes(functionalStatues, 1, Rarity.UncommonObject, 1, "Underground");
+            MakeTokenRecipes(decorationStatues, 1, Rarity.UncommonObject, 1, "Underground");
 
             /*
              * Paintings
@@ -948,15 +987,15 @@ namespace TokenMod
 
             int[] undergroundPaintings = { ItemID.AmericanExplosive, ItemID.CrownoDevoursHisLunch, ItemID.Discover, ItemID.FatherofSomeone, ItemID.FindingGold, ItemID.GloriousNight, ItemID.GuidePicasso,
                 ItemID.Land, ItemID.TheMerchant, ItemID.NurseLisa, ItemID.OldMiner, ItemID.RareEnchantment, ItemID.Sunflowers, ItemID.TerrarianGothic, ItemID.Waldo };
-            MakeTokenRecipes(undergroundPaintings, undergroundPaintings.Length, Rarity.CommonObject, 1, "Underground");
+            MakeTokenRecipes(undergroundPaintings, 1, Rarity.UncommonObject, 1, "Underground");
             int[] dungeonPaintings = { ItemID.BloodMoonRising, ItemID.BoneWarp, ItemID.TheCreationoftheGuide, ItemID.TheCursedMan, ItemID.TheDestroyer, ItemID.Dryadisque, ItemID.TheEyeSeestheEnd,
                 ItemID.FacingtheCerebralMastermind, ItemID.GloryoftheFire, ItemID.GoblinsPlayingPoker, ItemID.GreatWave, ItemID.TheGuardiansGaze, ItemID.TheHangedMan,
                 ItemID.Impact, ItemID.ThePersistencyofEyes, ItemID.PoweredbyBirds, ItemID.TheScreamer, ItemID.SkellingtonJSkellingsworth, ItemID.SparkyPainting, ItemID.SomethingEvilisWatchingYou,
                 ItemID.StarryNight, ItemID.TrioSuperHeroes, ItemID.TheTwinsHaveAwoken, ItemID.UnicornCrossingtheHallows };
-            MakeTokenRecipes(dungeonPaintings, dungeonPaintings.Length, Rarity.CommonObject, 2, "Dungeon");
+            MakeTokenRecipes(dungeonPaintings, 1, Rarity.UncommonObject, 2, "Dungeon");
             int[] underworldPaintings = { ItemID.DarkSoulReaper, ItemID.Darkness, ItemID.DemonsEye, ItemID.FlowingMagma, ItemID.HandEarth, ItemID.ImpFace, ItemID.LakeofFire, ItemID.LivingGore,
                 ItemID.OminousPresence, ItemID.ShiningMoon, ItemID.Skelehead, ItemID.TrappedGhost };
-            MakeTokenRecipes(underworldPaintings, underworldPaintings.Length, Rarity.CommonObject, 2, "Underworld");
+            MakeTokenRecipes(underworldPaintings, 1, Rarity.UncommonObject, 2, "Underworld");
 
 
             /*

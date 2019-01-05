@@ -30,7 +30,7 @@ namespace TokenMod.Items.Special
 
         public override void RightClick(Player player)
         {
-            TokenUtils.DropTokens(mod, player, TokenBalance.BASE_FISH_VALUE + TokenBalance.GetTierValue(TokenUtils.GetCurrentWorldTier()), null, true, 10, true, new List<int> { mod.ItemType<FishingToken>() });
+            TokenUtils.DropTokens(mod, player, TokenBalance.BASE_FISH_VALUE + TokenBalance.GetTierValue(TokenUtils.GetCurrentWorldTier()), null, true, 10 * TokenBalance.DROP_BASE_RATE, true, new List<int> { mod.ItemType<FishingToken>() });
         }
     }
 }
