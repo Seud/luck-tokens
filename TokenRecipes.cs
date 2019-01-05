@@ -729,10 +729,10 @@ namespace TokenMod
 
             // Shadow Chests
             // Since we should not consume a Shadow Key but still require one and cannot use a Shadow Chest as a crafting station, we create a locked token instead
-            MakeTokenRecipe(mod.ItemType<Items.Special.ShadowLockedToken>(), 2, Rarity.None, 0, "");
+            MakeTokenRecipe(mod.ItemType<Items.Special.ShadowLockedToken>(), 1, Rarity.None, 2, "");
             int[] shadowChest = { ItemID.DarkLance, ItemID.Flamelash, ItemID.FlowerofFire, ItemID.Sunfury, ItemID.HellwingBow };
             bonusItemID = mod.ItemType<Items.Token.ShadowToken>();
-            MakeSwapRecipes(shadowChest, Rarity.Chest, 0, "Underworld");
+            MakeSwapRecipes(shadowChest, Rarity.Chest, 2, "Underworld");
             bonusItemID = -1;
 
             // Ocean Chests
